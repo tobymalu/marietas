@@ -1,0 +1,79 @@
+.card-hero-container {
+  display: flex;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  background-color: #f5f0e5; /* Fondo opcional */
+}
+
+.card-hero {
+  display: flex;
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Centra el texto */
+  padding: 20px; /* Espaciado interno */
+
+  background-color: rgba(0, 0, 0, 0.05); /* Fondo sutil */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  max-width: 90%; /* Evita que sea más grande que la pantalla */
+}
+
+.card-hero h1 {
+  margin-bottom: 10px;
+  font-size: 2rem;
+  color: #1278c2;
+}
+
+.card-hero p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.card-img {
+  position: relative;
+  width: 300px;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out; /* Suaviza la animación */
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-text {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.card-img:hover {
+  transform: scale(1.1); /* Hace zoom en la imagen */
+}
+.card-text :hover {
+  transform: scale(1.2);
+}
+
+.card-link {
+  text-decoration: none; /* Sin subrayado para el enlace */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}

@@ -1,0 +1,100 @@
+/*logos comerciales*/
+#logos {
+  background-color: #ffffff;
+}
+
+/* footer todo*/
+
+.footer {
+  background-color: #1278c2;
+  color: #f4f5f6;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* Estilos para cada sección dentro del footer */
+.footer-section {
+  flex: 1 1 200px;
+  max-width: 300px;
+}
+
+/* Estilo del logo */
+.footer-logo img {
+  width: 120px;
+  margin-top: 20px;
+}
+
+/* Texto de los títulos */
+.footer h6 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Estilo del texto del botón de términos */
+.footer .terms-button {
+  color: #f4f5f6;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Redes sociales */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social-icons a {
+  color: #f4f5f6;
+  font-size: 24px;
+}
+
+/* Estilos para íconos sociales */
+.social-icons a i {
+  font-size: 24px;
+}
+
+/* nav bar blue*/
+
+.bg-custom-blue {
+  background-color: #1278c2;
+  color: #ffffff;
+}
+
+.bg-custom-blue .navbar-brand {
+  color: #ffffff;
+}
+
+.bg-custom-blue img {
+  background-color: #ecf7fd;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+/* fuentes*/
+
+* {
+  box-sizing: border-box;
+}
+.nunito-sans {
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Patua One", serif;
+  font-weight: 400;
+  font-style: normal;
+}

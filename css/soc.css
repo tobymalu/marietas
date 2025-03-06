@@ -1,0 +1,51 @@
+/* Logos desde aqui */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.container h3 {
+  margin-bottom: 20px;
+}
+
+/* Contenedor de avatares */
+.avatar-stack {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Avatar */
+.avatar {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  margin: 20px;
+  text-decoration: none;
+}
+
+/* Estilos de imagen */
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Formas de avatar */
+.avatar.circular {
+  border-radius: 50%; /* Forma circular */
+}
+
+.avatar.rounded {
+  border-radius: 15px; /* Bordes redondeados */
+}
+
+.avatar.square {
+  border-radius: 0; /* Forma cuadrada */
+}

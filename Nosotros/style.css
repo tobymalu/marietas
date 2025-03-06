@@ -1,0 +1,132 @@
+/* Estilo para la Hero Section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  background-image: url("/imgMarietas/LaPlayaDelAmor.jpg");
+  background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-content {
+  color: #ffffff; /* Texto blanco */
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para resaltar el texto */
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons a {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero-buttons .btn-primary {
+  background-color: #007bff; /* Azul */
+  color: #ffffff;
+}
+
+.hero-buttons .btn-primary:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+}
+
+.hero-buttons .btn-secondary {
+  background-color: #6c757d; /* Gris */
+  color: #ffffff;
+}
+
+.hero-buttons .btn-secondary:hover {
+  background-color: #343a40; /* Gris más oscuro */
+}
+
+/* Sección Información General */
+.info-section {
+  background-color: #f8f9fa; /* Fondo claro */
+  color: #333; /* Texto oscuro */
+}
+
+.info-section h2 {
+  font-size: 2.5rem;
+  color: #007bff; /* Azul principal */
+}
+
+.info-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-card {
+  display: block;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  color: inherit; /* Mantiene el color original */
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  text-decoration: none; /* Evita subrayado al pasar el cursor */
+}
+
+.info-icon {
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+.info-card-section {
+  background-color: #f8f9fa; /* Fondo claro */
+  padding: 40px 0;
+}
+
+.info-card-section .card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.info-card-section .card h4 {
+  color: #d9534f; /* Rojo de alerta */
+  font-weight: bold;
+}
+
+.info-card-section .btn-primary {
+  background-color: #007bff;
+  border: none;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.info-card-section .btn-primary:hover {
+  background-color: #0056b3;
+}

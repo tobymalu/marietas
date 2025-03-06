@@ -1,0 +1,4 @@
+extra.css tiene footer, color nav bar y las fuentes
+soc.css tiene la parte de socios
+en todas las paginas body hay que poner esto
+class="nunito-sans" style="background-color: #f6f1e6"
