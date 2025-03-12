@@ -1,4 +1,4 @@
-/* Logos desde aqui */
+/* Logos desde aqui socios seccion */
 .container {
   display: flex;
   flex-direction: column;
@@ -48,4 +48,15 @@
 
 .avatar.square {
   border-radius: 0; /* Forma cuadrada */
+}
+
+@media (max-width: 608px) {
+  .avatar-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
 }
