@@ -2,3 +2,120 @@ extra.css tiene footer, color nav bar y las fuentes
 soc.css tiene la parte de socios
 en todas las paginas body hay que poner esto
 class="nunito-sans" style="background-color: #f6f1e6"
+
+ <!-- meta datos-->
+    <title>
+      Inicio | Islas Marietas - Tours y Aventuras en Nayarit y Pueto Vallarta
+    </title>
+    <meta
+      name="description"
+      content="Descubre las Islas Marietas, un paraíso natural en Nayarit. Reserva tu tour y explora la Playa Escondida, avistamiento de ballenas y más."
+    />
+    <link rel="canonical" href="https://www.islamarietas.com" />
+    <meta
+      name="keywords"
+      content="Islas Marietas, Playa Escondida, tours en Nayarit, avistamiento de ballenas, snorkel, eco turismo, tours vallarta"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph (para redes sociales) -->
+    <meta
+      property="og:title"
+      content="Islas Marietas - Aventura y Naturaleza en Nayarit"
+    />
+    <meta
+      property="og:description"
+      content="Explora las Islas Marietas y descubre la Playa Escondida. Reserva tu tour hoy y vive una experiencia inolvidable en Nayarit."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.islamarietas.com" />
+    <meta
+      property="og:image"
+      content="https://www.islamarietas.com/imgMarietas/portada.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://www.islamarietas.com/imgMarietas/portada.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <!-- Twitter Cards -->
+    <meta
+      name="twitter:title"
+      content="Islas Marietas - Aventura y Naturaleza en Nayarit"
+    />
+    <meta
+      name="twitter:description"
+      content="Explora las Islas Marietas y descubre la Playa Escondida. Reserva tu tour hoy y vive una experiencia inolvidable en Nayarit."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.islamarietas.com/imgMarietas/portada.jpg"
+    />
+
+    <!-- Favicon para navegadores -->
+    <link
+      rel="icon"
+      href="/imgMarietas/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Favicon para dispositivos Apple -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/imgMarietas/favicon/apple-touch-icon.png"
+    />
+
+    <!-- Favicon para Android y Chrome -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/imgMarietas/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/imgMarietas/favicon/favicon-16x16.png"
+    />
+
+    <!-- Favicon para Windows -->
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="/imgMarietas/favicon/mstile-150x150.png"
+    />
+
+    <!-- Color de la barra de estado en móviles -->
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-W6WKPFJ");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    el del body
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-W6WKPFJ"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
