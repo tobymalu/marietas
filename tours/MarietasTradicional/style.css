@@ -1,0 +1,193 @@
+/* ===== Mantener el diseño original ===== */
+.todo {
+  margin: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.carousel-inner img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.carousel-thumbnails {
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-thumbnails .thumbnail {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+.carousel-thumbnails .thumbnail:hover,
+.carousel-thumbnails .thumbnail.active {
+  border: 2px solid #007bff;
+}
+
+/* ===== Precio ===== */
+.precio {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  text-align: center;
+  background-color: #f5f0e5;
+}
+
+b, .dinero {
+  font-weight: bold !important; /* Forzar negrita */
+}
+
+.dinero {
+  color: #d2691e;
+  font-size: large;
+}
+
+/* ===== Centrar solo los botones ===== */
+.btnfirst {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  margin-top: 20px;
+}
+
+/* ===== Estilo de botón ===== */
+.action {
+  background-color: chocolate;
+  color: #ffffff;
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.action a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.action:hover {
+  background-color: #d2691e;
+  transform: scale(1.05);
+}
+
+/* ===== Descripción del tour ===== */
+.tour-desc {
+  margin: 10px;
+}
+
+.tour-desc b {
+  font-size: larger;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Espacio entre los botones */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+.call-button,
+.whatsapp-button {
+  text-decoration: none; /* Quita subrayado */
+  padding: 10px 20px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 1rem; /* Tamaño de fuente */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Centra el texto */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Animación */
+}
+
+/* Botón de llamada */
+.call-button {
+  background-color: #1278c2; /* Azul */
+  color: white;
+}
+
+.call-button:hover {
+  background-color: #0a5c99; /* Azul más oscuro */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Botón de WhatsApp */
+.whatsapp-button {
+  background-color: #25d366; /* Verde WhatsApp */
+  color: white;
+}
+
+.whatsapp-button:hover {
+  background-color: #1ba954; /* Verde más oscuro */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* ===== Centrar mapa ===== */
+.mapa {
+  text-align: center;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+/* acomodo imagenes en fila*/
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Espacio entre imágenes */
+}
+
+
+/* ===== Responsividad ===== */
+@media (max-width: 768px) {
+  .carousel-thumbnails .thumbnail {
+    width: 150px;
+    height: 150px;
+  }
+
+  .precio {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  b {
+    font-weight: bold !important; /* Forzar negrita */
+  }
+
+@media (max-width: 480px) {
+  .carousel-thumbnails .thumbnail {
+    width: 100px;
+    height: 100px;
+  }
+
+  .action {
+    width: 100
+  }
+}
+
+@media (min-width: 768px) and (max-width: 965px) {
+  .image-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+  .image-container svg {
+    width: 250px;
+    height: 250px;
+  }
+}
