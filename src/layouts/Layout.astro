@@ -15,15 +15,23 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   type?: 'website' | 'article';
+  lang?: 'es' | 'en';
+  alternateUrl?: string;
 }
 
-const { title, description, canonical = Astro.url.pathname, ogImage = '/imgMarietas/portada.jpg', noindex = false, type = 'website' } = Astro.props;
+const { title, description, canonical = Astro.url.pathname, ogImage = '/imgMarietas/portada.jpg', noindex = false, type = 'website', lang = 'es', alternateUrl } = Astro.props;
 const absoluteImage = new URL(ogImage, site.url).href;
 const currentUrl = canonical.startsWith('http') ? canonical : new URL(canonical, site.url).href;
+const alternateLanguage = lang === 'es' ? 'en' : 'es';
+const alternateHref = alternateUrl ? new URL(alternateUrl, site.url).href : currentUrl;
+const defaultHref = lang === 'en' && alternateUrl ? alternateHref : currentUrl;
+const copy = lang === 'en'
+  ? { skip: 'Skip to content', navigation: 'Main navigation' }
+  : { skip: 'Saltar al contenido', navigation: 'Navegación principal' };
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -39,9 +47,10 @@ const currentUrl = canonical.startsWith('http') ? canonical : new URL(canonical,
     <meta name="description" content={description} />
     <link rel="canonical" href={currentUrl} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="alternate" hreflang="es" href={currentUrl} />
-    <link rel="alternate" hreflang="x-default" href={currentUrl} />
-    <meta property="og:locale" content="es_MX" />
+    <link rel="alternate" hreflang={lang} href={currentUrl} />
+    <link rel="alternate" hreflang={alternateLanguage} href={alternateHref} />
+    <link rel="alternate" hreflang="x-default" href={defaultHref} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_MX'} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
@@ -56,11 +65,11 @@ const currentUrl = canonical.startsWith('http') ? canonical : new URL(canonical,
   </head>
   <body>
     <GoogleTagManagerNoscript />
-    <Header />
-    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <Header lang={lang} />
+    <a class="skip-link" href="#main-content">{copy.skip}</a>
     <main id="main-content"><slot /></main>
-    <Footer />
-    <WhatsAppFloat />
-    <CookieBanner />
+    <Footer lang={lang} />
+    <WhatsAppFloat lang={lang} />
+    <CookieBanner lang={lang} />
   </body>
 </html>

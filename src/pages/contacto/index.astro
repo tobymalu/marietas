@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { site, whatsappUrl } from '../../lib/site';
 ---
 
-<Layout title="Contacto | Islas Marietas" description="Habla con nuestro equipo para planear tu visita a las Islas Marietas.">
+<Layout title="Contacto | Islas Marietas" description="Habla con nuestro equipo para planear tu visita a las Islas Marietas." alternateUrl="/en/contact/">
   <section class="container contact-page"><div><p class="eyebrow">Hablemos del mar</p><h1>Tu próxima historia empieza con un mensaje.</h1><p>Cuéntanos qué experiencia estás buscando y te ayudamos a elegir la mejor fecha y ruta.</p></div><div class="contact-links"><a href={whatsappUrl()}><span>WhatsApp</span><strong>Escríbenos directamente ↗</strong></a><a href={`tel:${site.phone.e164}`}><span>Teléfono</span><strong>{site.phone.display}</strong></a><a href={`mailto:${site.email}`}><span>Correo</span><strong>{site.email}</strong></a></div></section>
 </Layout>
 

@@ -17,7 +17,7 @@ const currentMonth = new Date().getUTCMonth() + 1;
 const operatesThisMonth = tour.data.meses.length === 0 || tour.data.meses.includes(currentMonth);
 ---
 
-<Layout title={tour.data.seo.meta_title} description={tour.data.seo.meta_description} canonical={tour.data.seo.canonical} ogImage={tour.data.seo.og_image} noindex={tour.data.seo.noindex} type="article">
+<Layout title={tour.data.seo.meta_title} description={tour.data.seo.meta_description} canonical={tour.data.seo.canonical} ogImage={tour.data.seo.og_image} noindex={tour.data.seo.noindex} type="article" alternateUrl={`/en/tours/${tour.id}/`}>
   <article class="container tour-detail">
     <div class="tour-detail__intro">
       <p class="eyebrow">{tour.data.duracion} · Islas Marietas</p>

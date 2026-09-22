@@ -1,15 +1,18 @@
 ---
 const consentKey = 'islas-marietas-consent';
+interface Props { lang?: 'es' | 'en' }
+const { lang = 'es' } = Astro.props;
+const copy = lang === 'en' ? { label: 'Cookie preferences', title: 'Your privacy matters', body: 'We use cookies to understand visits and improve your experience.', reject: 'Reject', accept: 'Accept' } : { label: 'Preferencias de cookies', title: 'Tu privacidad importa', body: 'Usamos cookies para medir visitas y mejorar tu experiencia.', reject: 'Rechazar', accept: 'Aceptar' };
 ---
 
-<aside class="cookie-banner" data-cookie-banner hidden aria-label="Preferencias de cookies">
+<aside class="cookie-banner" data-cookie-banner hidden aria-label={copy.label}>
   <div>
-    <strong>Tu privacidad importa</strong>
-    <p>Usamos cookies para medir visitas y mejorar tu experiencia.</p>
+    <strong>{copy.title}</strong>
+    <p>{copy.body}</p>
   </div>
   <div class="cookie-actions">
-    <button type="button" data-consent="reject">Rechazar</button>
-    <button type="button" data-consent="accept">Aceptar</button>
+    <button type="button" data-consent="reject">{copy.reject}</button>
+    <button type="button" data-consent="accept">{copy.accept}</button>
   </div>
 </aside>
 

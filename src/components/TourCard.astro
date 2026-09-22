@@ -10,20 +10,22 @@ interface Props {
       duracion: string;
     };
   };
+  lang?: 'es' | 'en';
 }
 
-const { tour } = Astro.props;
+const { tour, lang = 'es' } = Astro.props;
 const standardPrices = tour.data.precios.filter((price) => price.tipo === 'estandar');
 const lowestPrice = Math.min(...standardPrices.map((price) => price.precio));
 const currency = standardPrices[0]?.moneda ?? 'MXN';
+const copy = lang === 'en' ? { duration: tour.data.duracion, from: 'From', action: 'Explore this tour' } : { duration: tour.data.duracion, from: 'Desde', action: 'Conocer el tour' };
 ---
 
 <article class="tour-card">
   <img src={tour.data.galeria[0].imagen} alt={tour.data.galeria[0].alt} width="720" height="480" loading="lazy" />
   <div class="tour-card__body">
-    <p class="tour-card__meta">{tour.data.duracion} · Desde {currency} ${lowestPrice.toLocaleString('es-MX')}</p>
+    <p class="tour-card__meta">{copy.duration} · {copy.from} {currency} ${lowestPrice.toLocaleString('es-MX')}</p>
     <h2>{tour.data.nombre}</h2>
     <p>{tour.data.resumen}</p>
-    <a class="text-link" href={`/tours/${tour.id}/`}>Conocer el tour <span aria-hidden="true">→</span></a>
+    <a class="text-link" href={lang === 'en' ? `/en/tours/${tour.id}/` : `/tours/${tour.id}/`}>{copy.action} <span aria-hidden="true">→</span></a>
   </div>
 </article>

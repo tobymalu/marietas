@@ -17,21 +17,28 @@ const priceSchema = z.object({
   tipo: z.enum(['estandar', 'addon']).default('estandar'),
 });
 
-const tours = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tours' }),
-  schema: z.object({
-    nombre: z.string(),
-    h1: z.string(),
-    resumen: z.string(),
-    seo: seoSchema,
-    precios: z.array(priceSchema).min(1),
-    nota_precio: z.string(),
-    meses: z.array(z.number().int().min(1).max(12)).default([]),
-    galeria: z.array(z.object({ imagen: z.string(), alt: z.string() })).min(1),
-    duracion: z.string(),
-    destacado: z.boolean().default(false),
-    ultima_actualizacion: z.coerce.date().optional(),
-  }),
+const tourSchema = z.object({
+  nombre: z.string(),
+  h1: z.string(),
+  resumen: z.string(),
+  seo: seoSchema,
+  precios: z.array(priceSchema).min(1),
+  nota_precio: z.string(),
+  meses: z.array(z.number().int().min(1).max(12)).default([]),
+  galeria: z.array(z.object({ imagen: z.string(), alt: z.string() })).min(1),
+  duracion: z.string(),
+  destacado: z.boolean().default(false),
+  ultima_actualizacion: z.coerce.date().optional(),
 });
 
-export const collections = { tours };
+const tours = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tours' }),
+  schema: tourSchema,
+});
+
+const toursEn = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tours-en' }),
+  schema: tourSchema,
+});
+
+export const collections = { tours, toursEn };

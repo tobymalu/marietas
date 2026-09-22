@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import TourCard from '../../components/TourCard.astro';
+import Layout from '../../layouts/Layout.astro';
+import { whatsappUrl } from '../../lib/site';
+
+const tours = await getCollection('toursEn');
+---
+
+<Layout lang="en" title="Islas Marietas | Ocean adventures in Nayarit" description="Discover the Islas Marietas with thoughtful tours, Hidden Beach, snorkeling and unforgettable encounters with nature." alternateUrl="/">
+  <section class="home-hero container">
+    <div class="home-hero__copy">
+      <p class="eyebrow">Protected sanctuary · Nayarit</p>
+      <h1>Some places can only be understood once you live them.</h1>
+      <p class="lede">Sail to the Islas Marietas and experience their stories, wildlife and volcanic landscapes with a local crew who calls this coast home.</p>
+      <div class="hero-actions">
+        <a class="button button--primary" href="/en/tours/">Explore our tours</a>
+        <a class="button button--quiet" href={whatsappUrl('Hi, I would like information about tours to the Islas Marietas.')}>Talk to an advisor <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div class="home-hero__image"><img src="/imgMarietas/portada.jpg" alt="Aerial view of the Islas Marietas surrounded by the Pacific Ocean" width="1200" height="900" fetchpriority="high" /><span>Bay of Banderas</span></div>
+  </section>
+  <section class="intro-band"><div class="container intro-band__grid"><p class="eyebrow">More than a day trip</p><div><h2>A day of ocean, volcanic rock and wonder.</h2><p>These islands are home to seabirds, marine life and an extraordinary geological story. We invite you to experience them with care for their natural rhythm.</p></div></div></section>
+  <section class="container section-space"><div class="section-heading"><div><p class="eyebrow">Choose your route</p><h2>Experiences that stay with you</h2></div><a class="text-link" href="/en/tours/">See all tours <span aria-hidden="true">→</span></a></div><div class="tour-grid">{tours.map((tour) => <TourCard tour={tour} lang="en" />)}</div></section>
+</Layout>
+
+<style>
+  .home-hero { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(2rem,6vw,6rem); align-items:center; padding-block:clamp(3rem,8vw,7rem); }
+  .home-hero h1 { max-width:11ch; margin:.6rem 0 1.3rem; font:600 clamp(3.2rem,7vw,6.4rem)/.95 var(--font-display); letter-spacing:-.03em; }
+  .lede { max-width:42ch; color:var(--color-muted); font-size:1.08rem; line-height:1.7; }
+  .eyebrow { color:var(--color-accent); text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; font-weight:700; }
+  .hero-actions { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem; }
+  .button { display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.1rem; font-weight:700; }
+  .button--primary { background:var(--color-primary); color:white; }
+  .button--quiet { color:var(--color-primary); border-bottom:1px solid var(--color-primary); }
+  .home-hero__image { position:relative; }.home-hero__image img { display:block; width:100%; aspect-ratio:5/4; object-fit:cover; clip-path:polygon(8% 0,100% 4%,94% 100%,0 94%); }.home-hero__image span { position:absolute; right:1rem; bottom:1.3rem; padding:.45rem .7rem; color:white; background:var(--color-foreground); font-size:.75rem; }
+  .intro-band { padding-block:4rem; color:#f4efe5; background:var(--color-primary); }.intro-band__grid { display:grid; grid-template-columns:1fr 2fr; gap:2rem; }.intro-band h2,.section-heading h2 { margin:.4rem 0 1rem; font:600 clamp(2rem,4vw,3.5rem)/1.05 var(--font-display); }.intro-band p:not(.eyebrow) { max-width:55ch; color:#d1e3dc; line-height:1.7; }.section-space { padding-block:clamp(4rem,8vw,8rem); }.section-heading { display:flex; justify-content:space-between; gap:1rem; align-items:end; margin-bottom:2rem; }.tour-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }.tour-card { background:white; border:1px solid #dce5df; }.tour-card img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; }.tour-card__body { padding:1.35rem; }.tour-card__meta { margin:0; color:var(--color-accent); font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }.tour-card h2 { margin:.55rem 0; font:600 1.8rem/1.1 var(--font-display); }.tour-card__body>p:not(.tour-card__meta) { color:var(--color-muted); line-height:1.6; }.text-link { display:inline-flex; gap:.5rem; align-items:center; margin-top:1rem; color:var(--color-primary); font-weight:700; }
+  @media(max-width:720px) { .home-hero { grid-template-columns:1fr; }.home-hero h1 { font-size:clamp(3rem,15vw,5rem); }.intro-band__grid { grid-template-columns:1fr; }.section-heading { align-items:start; flex-direction:column; } }
+</style>

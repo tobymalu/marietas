@@ -25,6 +25,22 @@ export const NAV_LINKS = [
   { href: '/contacto/', label: 'Contacto' },
 ] as const;
 
+export const NAV_LINKS_EN = [
+  { href: '/en/', label: 'Home' },
+  { href: '/en/tours/', label: 'Tours' },
+  { href: '/en/about/', label: 'About us' },
+  { href: '/en/gallery/', label: 'Gallery' },
+  { href: '/en/blog/', label: 'Blog' },
+  { href: '/en/contact/', label: 'Contact' },
+] as const;
+
+export type SiteLanguage = 'es' | 'en';
+
+export const languageLabels = {
+  es: 'Español',
+  en: 'English',
+} as const;
+
 export function whatsappUrl(message = site.whatsapp.defaultMessage) {
   return `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(message)}`;
 }

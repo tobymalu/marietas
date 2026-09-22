@@ -8,7 +8,7 @@ const images = [
 ];
 ---
 
-<Layout title="Galería | Islas Marietas" description="Una mirada a los paisajes, la vida marina y las experiencias de Islas Marietas.">
+<Layout title="Galería | Islas Marietas" description="Una mirada a los paisajes, la vida marina y las experiencias de Islas Marietas." alternateUrl="/en/gallery/">
   <section class="container gallery-page"><p class="eyebrow">Postales del santuario</p><h1>El paisaje cambia con cada marea.</h1><div class="gallery-grid">{images.map(([src, alt]) => <img src={src} alt={alt} width="800" height="600" loading="lazy" />)}</div></section>
 </Layout>
 
