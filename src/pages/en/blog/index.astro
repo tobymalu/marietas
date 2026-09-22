@@ -1,11 +1,61 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 ---
 
-<Layout lang="en" title="Blog | Islas Marietas" description="Helpful guides and stories for planning your Islas Marietas adventure." alternateUrl="/blog/">
-  <section class="container blog-page"><p class="eyebrow">Pacific field notes</p><h1>Before you set sail, get to know the place.</h1><article><p class="article-kicker">Visitor guide</p><h2>How to prepare for a day at the Islas Marietas</h2><p>The best experience starts with clear information: what to bring, how the ocean moves and why the park rules matter.</p><a class="text-link" href="/en/contact/">Ask us before you book <span aria-hidden="true">→</span></a></article></section>
+<Layout
+  lang="en"
+  title="Blog | Islas Marietas"
+  description="Helpful guides and stories for planning your Islas Marietas adventure."
+  alternateUrl="/blog/"
+>
+  <section class="container blog-page">
+    <p class="eyebrow">Pacific field notes</p><h1>
+      Before you set sail, get to know the place.
+    </h1><article>
+      <p class="article-kicker">Visitor guide</p><h2>
+        How to prepare for a day at the Islas Marietas
+      </h2><p>
+        The best experience starts with clear information: what to bring, how
+        the ocean moves and why the park rules matter.
+      </p><a class="text-link" href="/en/contact/"
+        >Ask us before you book <span aria-hidden="true">→</span></a>
+    </article>
+  </section>
 </Layout>
 
 <style is:global>
-  .blog-page { padding-block:clamp(4rem,9vw,8rem); }.eyebrow,.article-kicker { color:var(--color-accent); text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; font-weight:700; }.blog-page h1 { max-width:11ch; margin:.6rem 0 4rem; font:600 clamp(3rem,8vw,6rem)/.95 var(--font-display); }.blog-page article { max-width:700px; margin-left:auto; padding:2rem 0; border-top:1px solid #cbd9d2; }.blog-page h2 { margin:.7rem 0; font:600 clamp(2rem,4vw,3.2rem)/1.05 var(--font-display); }.blog-page article p:not(.article-kicker) { color:var(--color-muted); line-height:1.7; }.text-link { color:var(--color-primary); font-weight:700; }
+  .blog-page {
+    padding-block: clamp(4rem, 9vw, 8rem);
+  }
+  .eyebrow,
+  .article-kicker {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .blog-page h1 {
+    max-width: 11ch;
+    margin: 0.6rem 0 4rem;
+    font: 600 clamp(3rem, 8vw, 6rem)/0.95 var(--font-display);
+  }
+  .blog-page article {
+    max-width: 700px;
+    margin-left: auto;
+    padding: 2rem 0;
+    border-top: 1px solid #cbd9d2;
+  }
+  .blog-page h2 {
+    margin: 0.7rem 0;
+    font: 600 clamp(2rem, 4vw, 3.2rem)/1.05 var(--font-display);
+  }
+  .blog-page article p:not(.article-kicker) {
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+  .text-link {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
 </style>

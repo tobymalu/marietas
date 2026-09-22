@@ -1,16 +1,67 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="Nosotros | Islas Marietas" description="Conoce al equipo local detrás de tus experiencias en las Islas Marietas." alternateUrl="/en/about/">
+<Layout
+  title="Nosotros | Islas Marietas"
+  description="Conoce al equipo local detrás de tus experiencias en las Islas Marietas."
+  alternateUrl="/en/about/"
+>
   <section class="container editorial-page">
     <p class="eyebrow">Nuestra forma de navegar</p>
     <h1>Conocer un lugar también es aprender a cuidarlo.</h1>
-    <img src="/imgMarietas/nosotros.jpg" alt="Equipo preparando una experiencia en las Islas Marietas" width="1200" height="700" />
-    <div class="copy"><p>Somos un equipo local que conoce estas aguas, sus temporadas y la responsabilidad que implica recibir visitantes en un santuario natural.</p><p>Diseñamos recorridos honestos, claros y cercanos para que cada visita se sienta como una invitación, no como una conquista.</p></div>
+    <img
+      src="/imgMarietas/nosotros.jpg"
+      alt="Equipo preparando una experiencia en las Islas Marietas"
+      width="1200"
+      height="700"
+    />
+    <div class="copy">
+      <p>
+        Somos un equipo local que conoce estas aguas, sus temporadas y la
+        responsabilidad que implica recibir visitantes en un santuario natural.
+      </p><p>
+        Diseñamos recorridos honestos, claros y cercanos para que cada visita se
+        sienta como una invitación, no como una conquista.
+      </p>
+    </div>
   </section>
 </Layout>
 
 <style is:global>
-  .editorial-page { padding-block:clamp(4rem,9vw,8rem); } .eyebrow { color:var(--color-accent); text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; font-weight:700; } .editorial-page h1 { max-width:12ch; margin:.6rem 0 2.5rem; font:600 clamp(3rem,8vw,6rem)/.95 var(--font-display); } .editorial-page > img { width:100%; max-height:560px; object-fit:cover; } .copy { display:grid; grid-template-columns:1fr 1fr; gap:3rem; max-width:780px; margin:3rem 0 0 auto; color:var(--color-muted); line-height:1.8; } @media(max-width:720px) { .copy { grid-template-columns:1fr; gap:0; } }
+  .editorial-page {
+    padding-block: clamp(4rem, 9vw, 8rem);
+  }
+  .eyebrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .editorial-page h1 {
+    max-width: 12ch;
+    margin: 0.6rem 0 2.5rem;
+    font: 600 clamp(3rem, 8vw, 6rem)/0.95 var(--font-display);
+  }
+  .editorial-page > img {
+    width: 100%;
+    max-height: 560px;
+    object-fit: cover;
+  }
+  .copy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 780px;
+    margin: 3rem 0 0 auto;
+    color: var(--color-muted);
+    line-height: 1.8;
+  }
+  @media (max-width: 720px) {
+    .copy {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
 </style>

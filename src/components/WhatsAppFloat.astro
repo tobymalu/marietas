@@ -1,18 +1,30 @@
 ---
-import { site, whatsappUrl } from '../lib/site';
-interface Props { lang?: 'es' | 'en' }
-const { lang = 'es' } = Astro.props;
-const label = lang === 'en' ? 'Book via WhatsApp' : 'Reserva por WhatsApp';
-const message = lang === 'en' ? 'Hi, I would like information about tours to the Islas Marietas.' : undefined;
+import { site, whatsappUrl } from "../lib/site";
+interface Props {
+  lang?: "es" | "en";
+}
+const { lang = "es" } = Astro.props;
+const label = lang === "en" ? "Book via WhatsApp" : "Reserva por WhatsApp";
+const message =
+  lang === "en"
+    ? "Hi, I would like information about tours to the Islas Marietas."
+    : undefined;
 ---
 
-<a class="whatsapp-float" data-whatsapp-float href={whatsappUrl(message)} target="_blank" rel="noreferrer" aria-label={label}>
+<a
+  class="whatsapp-float"
+  data-whatsapp-float
+  href={whatsappUrl(message)}
+  target="_blank"
+  rel="noreferrer"
+  aria-label={label}
+>
   <span aria-hidden="true">WA</span>
   <span>{label}</span>
 </a>
 
 <script is:inline>
-  const floatButton = document.querySelector('[data-whatsapp-float]');
-  const fixedCta = document.querySelector('[data-whatsapp-cta]');
+  const floatButton = document.querySelector("[data-whatsapp-float]");
+  const fixedCta = document.querySelector("[data-whatsapp-cta]");
   if (fixedCta && floatButton) floatButton.hidden = true;
 </script>

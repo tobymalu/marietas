@@ -1,9 +1,28 @@
 ---
-import { NAV_LINKS, NAV_LINKS_EN, site, type SiteLanguage } from '../lib/site';
-interface Props { lang?: SiteLanguage }
-const { lang = 'es' } = Astro.props;
-const navLinks = lang === 'en' ? NAV_LINKS_EN : NAV_LINKS;
-const copy = lang === 'en' ? { kicker: 'Travel with intention', title: 'The ocean is waiting for you.', body: 'Thoughtful experiences to discover the Islas Marietas sanctuary.', explore: 'Explore', reserve: 'Book your trip', rights: 'All rights reserved.' } : { kicker: 'Navega con intención', title: 'El mar te está esperando.', body: 'Experiencias responsables para conocer el santuario de las Islas Marietas.', explore: 'Explora', reserve: 'Reserva', rights: 'Todos los derechos reservados.' };
+import { NAV_LINKS, NAV_LINKS_EN, site, type SiteLanguage } from "../lib/site";
+interface Props {
+  lang?: SiteLanguage;
+}
+const { lang = "es" } = Astro.props;
+const navLinks = lang === "en" ? NAV_LINKS_EN : NAV_LINKS;
+const copy =
+  lang === "en"
+    ? {
+        kicker: "Travel with intention",
+        title: "The ocean is waiting for you.",
+        body: "Thoughtful experiences to discover the Islas Marietas sanctuary.",
+        explore: "Explore",
+        reserve: "Book your trip",
+        rights: "All rights reserved.",
+      }
+    : {
+        kicker: "Navega con intención",
+        title: "El mar te está esperando.",
+        body: "Experiencias responsables para conocer el santuario de las Islas Marietas.",
+        explore: "Explora",
+        reserve: "Reserva",
+        rights: "Todos los derechos reservados.",
+      };
 ---
 
 <footer class="site-footer">
@@ -24,5 +43,8 @@ const copy = lang === 'en' ? { kicker: 'Travel with intention', title: 'The ocea
       <a href={site.social.instagram}>Instagram</a>
     </div>
   </div>
-  <div class="site-footer__bottom">© {new Date().getFullYear()} {site.name}. {copy.rights}</div>
+  <div class="site-footer__bottom">
+    © {new Date().getFullYear()}
+    {site.name}. {copy.rights}
+  </div>
 </footer>

@@ -1,12 +1,12 @@
 ---
-import CookieBanner from '../components/CookieBanner.astro';
-import Footer from '../components/Footer.astro';
-import GoogleTagManager from '../components/GoogleTagManager.astro';
-import GoogleTagManagerNoscript from '../components/GoogleTagManagerNoscript.astro';
-import Header from '../components/Header.astro';
-import WhatsAppFloat from '../components/WhatsAppFloat.astro';
-import { site } from '../lib/site';
-import '../styles/global.css';
+import CookieBanner from "../components/CookieBanner.astro";
+import Footer from "../components/Footer.astro";
+import GoogleTagManager from "../components/GoogleTagManager.astro";
+import GoogleTagManagerNoscript from "../components/GoogleTagManagerNoscript.astro";
+import Header from "../components/Header.astro";
+import WhatsAppFloat from "../components/WhatsAppFloat.astro";
+import { site } from "../lib/site";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -14,20 +14,34 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   noindex?: boolean;
-  type?: 'website' | 'article';
-  lang?: 'es' | 'en';
+  type?: "website" | "article";
+  lang?: "es" | "en";
   alternateUrl?: string;
 }
 
-const { title, description, canonical = Astro.url.pathname, ogImage = '/imgMarietas/portada.jpg', noindex = false, type = 'website', lang = 'es', alternateUrl } = Astro.props;
+const {
+  title,
+  description,
+  canonical = Astro.url.pathname,
+  ogImage = "/imgMarietas/portada.jpg",
+  noindex = false,
+  type = "website",
+  lang = "es",
+  alternateUrl,
+} = Astro.props;
 const absoluteImage = new URL(ogImage, site.url).href;
-const currentUrl = canonical.startsWith('http') ? canonical : new URL(canonical, site.url).href;
-const alternateLanguage = lang === 'es' ? 'en' : 'es';
-const alternateHref = alternateUrl ? new URL(alternateUrl, site.url).href : currentUrl;
-const defaultHref = lang === 'en' && alternateUrl ? alternateHref : currentUrl;
-const copy = lang === 'en'
-  ? { skip: 'Skip to content', navigation: 'Main navigation' }
-  : { skip: 'Saltar al contenido', navigation: 'Navegación principal' };
+const currentUrl = canonical.startsWith("http")
+  ? canonical
+  : new URL(canonical, site.url).href;
+const alternateLanguage = lang === "es" ? "en" : "es";
+const alternateHref = alternateUrl
+  ? new URL(alternateUrl, site.url).href
+  : currentUrl;
+const defaultHref = lang === "en" && alternateUrl ? alternateHref : currentUrl;
+const copy =
+  lang === "en"
+    ? { skip: "Skip to content", navigation: "Main navigation" }
+    : { skip: "Saltar al contenido", navigation: "Navegación principal" };
 ---
 
 <!doctype html>
@@ -38,10 +52,26 @@ const copy = lang === 'en'
     <GoogleTagManager />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" href="/imgMarietas/favicon/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/imgMarietas/favicon/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/imgMarietas/favicon/favicon-32x32.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="/imgMarietas/favicon/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/imgMarietas/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/imgMarietas/favicon/favicon-32x32.png"
+    />
     <link rel="manifest" href="/imgMarietas/favicon/site.webmanifest" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -50,7 +80,7 @@ const copy = lang === 'en'
     <link rel="alternate" hreflang={lang} href={currentUrl} />
     <link rel="alternate" hreflang={alternateLanguage} href={alternateHref} />
     <link rel="alternate" hreflang="x-default" href={defaultHref} />
-    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_MX'} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "es_MX"} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />

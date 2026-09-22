@@ -1,16 +1,44 @@
 ---
-import { NAV_LINKS, NAV_LINKS_EN, languageLabels, site, type SiteLanguage } from '../lib/site';
-interface Props { lang?: SiteLanguage }
-const { lang = 'es' } = Astro.props;
-const navLinks = lang === 'en' ? NAV_LINKS_EN : NAV_LINKS;
+import {
+  NAV_LINKS,
+  NAV_LINKS_EN,
+  languageLabels,
+  site,
+  type SiteLanguage,
+} from "../lib/site";
+interface Props {
+  lang?: SiteLanguage;
+}
+const { lang = "es" } = Astro.props;
+const navLinks = lang === "en" ? NAV_LINKS_EN : NAV_LINKS;
 const currentPath = Astro.url.pathname;
-const languagePath = lang === 'es' ? `/en${currentPath === '/' ? '/' : currentPath}` : currentPath.replace(/^\/en/, '') || '/';
-const copy = lang === 'en' ? { menu: 'Menu', open: 'Open menu', navigation: 'Main navigation', home: 'home' } : { menu: 'Menú', open: 'Abrir menú', navigation: 'Navegación principal', home: 'inicio' };
+const languagePath =
+  lang === "es"
+    ? `/en${currentPath === "/" ? "/" : currentPath}`
+    : currentPath.replace(/^\/en/, "") || "/";
+const copy =
+  lang === "en"
+    ? {
+        menu: "Menu",
+        open: "Open menu",
+        navigation: "Main navigation",
+        home: "home",
+      }
+    : {
+        menu: "Menú",
+        open: "Abrir menú",
+        navigation: "Navegación principal",
+        home: "inicio",
+      };
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand" href={lang === 'en' ? '/en/' : '/'} aria-label={`${site.name}, ${copy.home}`}>
+    <a
+      class="brand"
+      href={lang === "en" ? "/en/" : "/"}
+      aria-label={`${site.name}, ${copy.home}`}
+    >
       <img src="/imgMarietas/MarietasLogo.png" alt="" width="48" height="48" />
       <span>{site.name}</span>
     </a>
@@ -19,12 +47,25 @@ const copy = lang === 'en' ? { menu: 'Menu', open: 'Open menu', navigation: 'Mai
         <summary aria-label={copy.open}>{copy.menu}</summary>
         <div class="mobile-menu__panel">
           {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-          <a class="language-switch" href={languagePath}>{lang === 'en' ? 'ES' : 'EN'}</a>
+          <a class="language-switch" href={languagePath}
+            >{lang === "en" ? "ES" : "EN"}</a
+          >
         </div>
       </details>
       <div class="desktop-menu">
-        {navLinks.map((link) => <a class:list-active={currentPath === link.href} href={link.href}>{link.label}</a>)}
-        <a class="language-switch" href={languagePath} aria-label={lang === 'en' ? 'Cambiar a español' : 'Switch to English'}>{lang === 'en' ? 'ES' : 'EN'}</a>
+        {
+          navLinks.map((link) => (
+            <a class:list-active={currentPath === link.href} href={link.href}>
+              {link.label}
+            </a>
+          ))
+        }
+        <a
+          class="language-switch"
+          href={languagePath}
+          aria-label={lang === "en" ? "Cambiar a español" : "Switch to English"}
+          >{lang === "en" ? "ES" : "EN"}</a
+        >
       </div>
     </nav>
   </div>

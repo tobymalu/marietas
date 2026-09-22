@@ -1,5 +1,5 @@
-import { glob } from 'astro/loaders';
-import { defineCollection, z } from 'astro:content';
+import { glob } from "astro/loaders";
+import { defineCollection, z } from "astro:content";
 
 const seoSchema = z.object({
   meta_title: z.string(),
@@ -12,9 +12,9 @@ const seoSchema = z.object({
 const priceSchema = z.object({
   etiqueta: z.string(),
   precio: z.number(),
-  moneda: z.enum(['MXN', 'USD']).default('MXN'),
+  moneda: z.enum(["MXN", "USD"]).default("MXN"),
   nota: z.string().optional(),
-  tipo: z.enum(['estandar', 'addon']).default('estandar'),
+  tipo: z.enum(["estandar", "addon"]).default("estandar"),
 });
 
 const tourSchema = z.object({
@@ -32,12 +32,12 @@ const tourSchema = z.object({
 });
 
 const tours = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tours' }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/tours" }),
   schema: tourSchema,
 });
 
 const toursEn = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tours-en' }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/tours-en" }),
   schema: tourSchema,
 });
 

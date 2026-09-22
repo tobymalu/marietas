@@ -1,8 +1,25 @@
 ---
-const consentKey = 'islas-marietas-consent';
-interface Props { lang?: 'es' | 'en' }
-const { lang = 'es' } = Astro.props;
-const copy = lang === 'en' ? { label: 'Cookie preferences', title: 'Your privacy matters', body: 'We use cookies to understand visits and improve your experience.', reject: 'Reject', accept: 'Accept' } : { label: 'Preferencias de cookies', title: 'Tu privacidad importa', body: 'Usamos cookies para medir visitas y mejorar tu experiencia.', reject: 'Rechazar', accept: 'Aceptar' };
+const consentKey = "islas-marietas-consent";
+interface Props {
+  lang?: "es" | "en";
+}
+const { lang = "es" } = Astro.props;
+const copy =
+  lang === "en"
+    ? {
+        label: "Cookie preferences",
+        title: "Your privacy matters",
+        body: "We use cookies to understand visits and improve your experience.",
+        reject: "Reject",
+        accept: "Accept",
+      }
+    : {
+        label: "Preferencias de cookies",
+        title: "Tu privacidad importa",
+        body: "Usamos cookies para medir visitas y mejorar tu experiencia.",
+        reject: "Rechazar",
+        accept: "Aceptar",
+      };
 ---
 
 <aside class="cookie-banner" data-cookie-banner hidden aria-label={copy.label}>
@@ -17,22 +34,28 @@ const copy = lang === 'en' ? { label: 'Cookie preferences', title: 'Your privacy
 </aside>
 
 <script is:inline define:vars={{ consentKey }}>
-  const banner = document.querySelector('[data-cookie-banner]');
+  const banner = document.querySelector("[data-cookie-banner]");
   const storedChoice = window.localStorage.getItem(consentKey);
   if (!storedChoice) banner.hidden = false;
-  banner?.querySelectorAll('[data-consent]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const accepted = button.dataset.consent === 'accept';
-      const status = accepted ? 'granted' : 'denied';
-      window.localStorage.setItem(consentKey, accepted ? 'accepted' : 'rejected');
-      window.gtag?.('consent', 'update', {
+  banner?.querySelectorAll("[data-consent]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const accepted = button.dataset.consent === "accept";
+      const status = accepted ? "granted" : "denied";
+      window.localStorage.setItem(
+        consentKey,
+        accepted ? "accepted" : "rejected",
+      );
+      window.gtag?.("consent", "update", {
         analytics_storage: status,
         ad_storage: status,
         ad_user_data: status,
         ad_personalization: status,
       });
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'consent_update', consent_choice: accepted ? 'accepted' : 'rejected' });
+      window.dataLayer.push({
+        event: "consent_update",
+        consent_choice: accepted ? "accepted" : "rejected",
+      });
       banner.hidden = true;
     });
   });

@@ -1,12 +1,84 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import { site, whatsappUrl } from '../../../lib/site';
+import Layout from "../../../layouts/Layout.astro";
+import { site, whatsappUrl } from "../../../lib/site";
 ---
 
-<Layout lang="en" title="Contact | Islas Marietas" description="Talk to our local team and plan your Islas Marietas adventure." alternateUrl="/contacto/">
-  <section class="container contact-page"><div><p class="eyebrow">Let's talk ocean</p><h1>Your next story starts with a message.</h1><p>Tell us what kind of experience you are looking for and we will help you choose the right route and date.</p></div><div class="contact-links"><a href={whatsappUrl('Hi, I would like information about the tours to the Islas Marietas.')}><span>WhatsApp</span><strong>Message us directly ↗</strong></a><a href={`tel:${site.phone.e164}`}><span>Phone</span><strong>{site.phone.display}</strong></a><a href={`mailto:${site.email}`}><span>Email</span><strong>{site.email}</strong></a></div></section>
+<Layout
+  lang="en"
+  title="Contact | Islas Marietas"
+  description="Talk to our local team and plan your Islas Marietas adventure."
+  alternateUrl="/contacto/"
+>
+  <section class="container contact-page">
+    <div>
+      <p class="eyebrow">Let's talk ocean</p><h1>
+        Your next story starts with a message.
+      </h1><p>
+        Tell us what kind of experience you are looking for and we will help you
+        choose the right route and date.
+      </p>
+    </div><div class="contact-links">
+      <a
+        href={whatsappUrl(
+          "Hi, I would like information about the tours to the Islas Marietas.",
+        )}><span>WhatsApp</span><strong>Message us directly ↗</strong></a
+      ><a href={`tel:${site.phone.e164}`}
+        ><span>Phone</span><strong>{site.phone.display}</strong></a
+      ><a href={`mailto:${site.email}`}
+        ><span>Email</span><strong>{site.email}</strong></a>
+    </div>
+  </section>
 </Layout>
 
 <style is:global>
-  .contact-page { display:grid; grid-template-columns:1fr 1fr; gap:clamp(3rem,10vw,9rem); padding-block:clamp(5rem,12vw,10rem); align-items:center; }.eyebrow { color:var(--color-accent); text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; font-weight:700; }.contact-page h1 { max-width:10ch; margin:.6rem 0 1.2rem; font:600 clamp(3rem,7vw,5.8rem)/.95 var(--font-display); }.contact-page>div:first-child>p:last-child { max-width:38ch; color:var(--color-muted); line-height:1.7; }.contact-links { display:grid; border-top:1px solid #cbd9d2; }.contact-links a { display:grid; gap:.35rem; padding:1.2rem 0; border-bottom:1px solid #cbd9d2; }.contact-links span { color:var(--color-accent); font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; font-weight:700; }.contact-links strong { color:var(--color-primary); font-size:1.05rem; }@media(max-width:720px) { .contact-page { grid-template-columns:1fr; } }
+  .contact-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 10vw, 9rem);
+    padding-block: clamp(5rem, 12vw, 10rem);
+    align-items: center;
+  }
+  .eyebrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .contact-page h1 {
+    max-width: 10ch;
+    margin: 0.6rem 0 1.2rem;
+    font: 600 clamp(3rem, 7vw, 5.8rem)/0.95 var(--font-display);
+  }
+  .contact-page > div:first-child > p:last-child {
+    max-width: 38ch;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+  .contact-links {
+    display: grid;
+    border-top: 1px solid #cbd9d2;
+  }
+  .contact-links a {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #cbd9d2;
+  }
+  .contact-links span {
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .contact-links strong {
+    color: var(--color-primary);
+    font-size: 1.05rem;
+  }
+  @media (max-width: 720px) {
+    .contact-page {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

@@ -1,36 +1,39 @@
 ---
-const consentKey = 'islas-marietas-consent';
-const gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-MZCGN2DZ';
+const consentKey = "islas-marietas-consent";
+const gtmId = import.meta.env.PUBLIC_GTM_ID || "GTM-MZCGN2DZ";
 ---
 
 <script is:inline define:vars={{ consentKey, gtmId }}>
   window.dataLayer = window.dataLayer || [];
   const savedConsent = window.localStorage.getItem(consentKey);
-  const consentGranted = savedConsent === 'accepted';
+  const consentGranted = savedConsent === "accepted";
   window.dataLayer.push({
-    event: 'default_consent',
-    consent_mode: 'v2',
-    analytics_storage: consentGranted ? 'granted' : 'denied',
-    ad_storage: consentGranted ? 'granted' : 'denied',
-    ad_user_data: consentGranted ? 'granted' : 'denied',
-    ad_personalization: consentGranted ? 'granted' : 'denied',
+    event: "default_consent",
+    consent_mode: "v2",
+    analytics_storage: consentGranted ? "granted" : "denied",
+    ad_storage: consentGranted ? "granted" : "denied",
+    ad_user_data: consentGranted ? "granted" : "denied",
+    ad_personalization: consentGranted ? "granted" : "denied",
   });
-  window.gtag = function () { window.dataLayer.push(arguments); };
-  window.gtag('consent', 'default', {
-    analytics_storage: consentGranted ? 'granted' : 'denied',
-    ad_storage: consentGranted ? 'granted' : 'denied',
-    ad_user_data: consentGranted ? 'granted' : 'denied',
-    ad_personalization: consentGranted ? 'granted' : 'denied',
+  window.gtag = function () {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag("consent", "default", {
+    analytics_storage: consentGranted ? "granted" : "denied",
+    ad_storage: consentGranted ? "granted" : "denied",
+    ad_user_data: consentGranted ? "granted" : "denied",
+    ad_personalization: consentGranted ? "granted" : "denied",
     wait_for_update: 500,
   });
   (function (w, d, s, l, i) {
     w[l] = w[l] || [];
-    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
     const firstScript = d.getElementsByTagName(s)[0];
     const gtmScript = d.createElement(s);
-    const layerQuery = l !== 'dataLayer' ? '&l=' + l : '';
+    const layerQuery = l !== "dataLayer" ? "&l=" + l : "";
     gtmScript.async = true;
-    gtmScript.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + layerQuery;
+    gtmScript.src =
+      "https://www.googletagmanager.com/gtm.js?id=" + i + layerQuery;
     firstScript.parentNode.insertBefore(gtmScript, firstScript);
-  })(window, document, 'script', 'dataLayer', gtmId);
+  })(window, document, "script", "dataLayer", gtmId);
 </script>
