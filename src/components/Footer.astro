@@ -1,0 +1,24 @@
+---
+import { NAV_LINKS, site } from '../lib/site';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div>
+      <p class="footer-kicker">Navega con intención</p>
+      <h2>El mar te está esperando.</h2>
+      <p>Experiencias responsables para conocer el santuario de las Islas Marietas.</p>
+    </div>
+    <div>
+      <p class="footer-kicker">Explora</p>
+      {NAV_LINKS.slice(1, 5).map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+    <div>
+      <p class="footer-kicker">Reserva</p>
+      <a href={`tel:${site.phone.e164}`}>{site.phone.display}</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href={site.social.instagram}>Instagram</a>
+    </div>
+  </div>
+  <div class="site-footer__bottom">© {new Date().getFullYear()} {site.name}. Todos los derechos reservados.</div>
+</footer>

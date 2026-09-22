@@ -1,0 +1,14 @@
+---
+import { site, whatsappUrl } from '../lib/site';
+---
+
+<a class="whatsapp-float" data-whatsapp-float href={whatsappUrl()} target="_blank" rel="noreferrer" aria-label="Escríbenos por WhatsApp">
+  <span aria-hidden="true">WA</span>
+  <span>Reserva por WhatsApp</span>
+</a>
+
+<script is:inline>
+  const floatButton = document.querySelector('[data-whatsapp-float]');
+  const fixedCta = document.querySelector('[data-whatsapp-cta]');
+  if (fixedCta && floatButton) floatButton.hidden = true;
+</script>

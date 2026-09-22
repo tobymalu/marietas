@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import TourCard from '../../components/TourCard.astro';
+import Layout from '../../layouts/Layout.astro';
+
+const tours = await getCollection('tours');
+---
+
+<Layout title="Tours a las Islas Marietas" description="Conoce todos nuestros tours a las Islas Marietas: Playa Escondida, snorkel, navegación y naturaleza.">
+  <section class="container tours-intro">
+    <p class="eyebrow">Experiencias en el Pacífico</p>
+    <h1>Elige cómo quieres conocer las islas.</h1>
+    <p>Rutas pensadas para distintos ritmos, todas con la misma intención: disfrutar el santuario sin dejar huella.</p>
+  </section>
+  <section class="container tour-grid tours-list">{tours.map((tour) => <TourCard tour={tour} />)}</section>
+</Layout>
+
+<style>
+  .eyebrow { color:var(--color-accent); text-transform:uppercase; letter-spacing:.14em; font-size:.72rem; font-weight:700; }
+  .tours-intro { padding-block:clamp(4rem,10vw,8rem) 3rem; }
+  h1 { max-width: 12ch; margin:.6rem 0 1rem; font:600 clamp(3rem,8vw,6rem)/.95 var(--font-display); }
+  .tours-intro > p:last-child { max-width:44ch; color:var(--color-muted); font-size:1.1rem; line-height:1.7; }
+  .tour-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+  .tours-list { padding-bottom:6rem; }
+  .tour-card { background:white; border:1px solid #dce5df; }
+  .tour-card img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; }
+  .tour-card__body { padding:1.35rem; }
+  .tour-card__meta { margin:0; color:var(--color-accent); font-size:.75rem; font-weight:700; text-transform:uppercase; }
+  .tour-card h2 { margin:.55rem 0; font:600 1.8rem/1.1 var(--font-display); }
+  .tour-card__body > p:not(.tour-card__meta) { color:var(--color-muted); line-height:1.6; }
+  .text-link { display:inline-flex; gap:.5rem; margin-top:1rem; color:var(--color-primary); font-weight:700; }
+</style>

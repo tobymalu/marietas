@@ -1,0 +1,36 @@
+---
+const consentKey = 'islas-marietas-consent';
+---
+
+<aside class="cookie-banner" data-cookie-banner hidden aria-label="Preferencias de cookies">
+  <div>
+    <strong>Tu privacidad importa</strong>
+    <p>Usamos cookies para medir visitas y mejorar tu experiencia.</p>
+  </div>
+  <div class="cookie-actions">
+    <button type="button" data-consent="reject">Rechazar</button>
+    <button type="button" data-consent="accept">Aceptar</button>
+  </div>
+</aside>
+
+<script is:inline define:vars={{ consentKey }}>
+  const banner = document.querySelector('[data-cookie-banner]');
+  const storedChoice = window.localStorage.getItem(consentKey);
+  if (!storedChoice) banner.hidden = false;
+  banner?.querySelectorAll('[data-consent]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const accepted = button.dataset.consent === 'accept';
+      const status = accepted ? 'granted' : 'denied';
+      window.localStorage.setItem(consentKey, accepted ? 'accepted' : 'rejected');
+      window.gtag?.('consent', 'update', {
+        analytics_storage: status,
+        ad_storage: status,
+        ad_user_data: status,
+        ad_personalization: status,
+      });
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'consent_update', consent_choice: accepted ? 'accepted' : 'rejected' });
+      banner.hidden = true;
+    });
+  });
+</script>

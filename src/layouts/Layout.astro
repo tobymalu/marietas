@@ -1,0 +1,65 @@
+---
+import CookieBanner from '../components/CookieBanner.astro';
+import Footer from '../components/Footer.astro';
+import GoogleTagManager from '../components/GoogleTagManager.astro';
+import GoogleTagManagerNoscript from '../components/GoogleTagManagerNoscript.astro';
+import Header from '../components/Header.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { site } from '../lib/site';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+}
+
+const { title, description, canonical = Astro.url.href, ogImage = '/imgMarietas/portada.jpg', noindex = false, type = 'website' } = Astro.props;
+const absoluteImage = new URL(ogImage, site.url).href;
+const currentUrl = canonical.startsWith('http') ? canonical : new URL(canonical, site.url).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <GoogleTagManager />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="/imgMarietas/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/imgMarietas/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/imgMarietas/favicon/favicon-32x32.png" />
+    <link rel="manifest" href="/imgMarietas/favicon/site.webmanifest" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={currentUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="alternate" hreflang="es" href={currentUrl} />
+    <link rel="alternate" hreflang="x-default" href={currentUrl} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:alt" content="Paisaje de las Islas Marietas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+  </head>
+  <body>
+    <GoogleTagManagerNoscript />
+    <Header />
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+    <main id="main-content"><slot /></main>
+    <Footer />
+    <WhatsAppFloat />
+    <CookieBanner />
+  </body>
+</html>
