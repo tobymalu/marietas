@@ -13,6 +13,8 @@ const standardPrices = tour.data.precios.filter((price) => price.tipo === 'estan
 const lowestPrice = Math.min(...standardPrices.map((price) => price.precio));
 const currency = standardPrices[0]?.moneda ?? 'MXN';
 const updatedDate = tour.data.ultima_actualizacion?.toLocaleDateString('es-MX', { timeZone: 'UTC', dateStyle: 'long' });
+const currentMonth = new Date().getUTCMonth() + 1;
+const operatesThisMonth = tour.data.meses.length === 0 || tour.data.meses.includes(currentMonth);
 ---
 
 <Layout title={tour.data.seo.meta_title} description={tour.data.seo.meta_description} canonical={tour.data.seo.canonical} ogImage={tour.data.seo.og_image} noindex={tour.data.seo.noindex} type="article">
@@ -32,7 +34,7 @@ const updatedDate = tour.data.ultima_actualizacion?.toLocaleDateString('es-MX', 
         <p class="from-label">Desde</p>
         <p class="price">{currency} ${lowestPrice.toLocaleString('es-MX')} <small>por persona</small></p>
         <p class="price-note">{tour.data.nota_precio}</p>
-        <a class="button" href="https://wa.me/523221473221" data-whatsapp-cta>Consultar disponibilidad <span aria-hidden="true">↗</span></a>
+        <a class="button" href="https://wa.me/523221473221" data-whatsapp-cta>{operatesThisMonth ? 'Consultar disponibilidad' : 'Unirme a la lista de espera'} <span aria-hidden="true">↗</span></a>
       </aside>
     </div>
   </article>
