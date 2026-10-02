@@ -31,6 +31,8 @@ galeria:
     alt: Entrada rocosa a Playa Escondida en las Islas Marietas
 duracion: 7 horas
 destacado: true
+orden: 1
+badges: [Cupo limitado, Playa del Amor]
 ultima_actualizacion: 2026-09-15
 ---
 

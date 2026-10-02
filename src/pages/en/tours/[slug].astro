@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
+import { whatsappUrl } from "../../../lib/site";
+import { lowestStandardPrice } from "../../../lib/tours";
 
 export async function getStaticPaths() {
   const tours = await getCollection("toursEn");
@@ -9,11 +11,7 @@ export async function getStaticPaths() {
 
 const { tour } = Astro.props;
 const { Content } = await render(tour);
-const standardPrices = tour.data.precios.filter(
-  (price) => price.tipo === "estandar",
-);
-const lowestPrice = Math.min(...standardPrices.map((price) => price.precio));
-const currency = standardPrices[0]?.moneda ?? "MXN";
+const price = lowestStandardPrice(tour.data.precios);
 const updatedDate = tour.data.ultima_actualizacion?.toLocaleDateString(
   "en-US",
   { timeZone: "UTC", dateStyle: "long" },
@@ -50,14 +48,21 @@ const operatesThisMonth =
           updatedDate && <p class="updated">Last updated: {updatedDate}</p>
         }
       </div><aside class="price-panel">
-        <p class="eyebrow">Save your spot</p><p class="from-label">From</p><p
-          class="price"
-        >
-          {currency} ${lowestPrice.toLocaleString("en-US")}
-          <small>per person</small>
-        </p><p class="price-note">{tour.data.nota_precio}</p><a
+        <p class="eyebrow">Save your spot</p>{
+          price ? (
+            <>
+              <p class="from-label">From</p>
+              <p class="price">
+                {price.currency} ${price.amount.toLocaleString("en-US")}
+                <small>per person</small>
+              </p>
+            </>
+          ) : (
+            <p class="price">Price on request</p>
+          )
+        }<p class="price-note">{tour.data.nota_precio}</p><a
           class="button"
-          href="https://wa.me/523221473221"
+          href={whatsappUrl()}
           data-whatsapp-cta
           >{operatesThisMonth ? "Check availability" : "Join the waitlist"}
           <span aria-hidden="true">↗</span></a>

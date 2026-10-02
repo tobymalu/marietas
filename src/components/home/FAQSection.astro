@@ -1,0 +1,59 @@
+---
+import type { FaqItem } from "../../lib/home-content";
+import { whatsappUrl, type SiteLanguage } from "../../lib/site";
+import Accordion from "./Accordion.astro";
+
+interface Props {
+  items: FaqItem[];
+  lang?: SiteLanguage;
+}
+
+const { items, lang = "es" } = Astro.props;
+const copy =
+  lang === "en"
+    ? {
+        eyebrow: "FAQ",
+        title: "Your questions, answered before you set sail",
+        lede: "Can’t find your answer? Message us and we’ll reply in minutes.",
+        cta: "Ask on WhatsApp",
+      }
+    : {
+        eyebrow: "Preguntas frecuentes",
+        title: "Resolvemos tus dudas antes de zarpar",
+        lede: "¿No encuentras tu respuesta? Escríbenos y te contestamos en minutos.",
+        cta: "Preguntar por WhatsApp",
+      };
+---
+
+<section class="container section-space faq" aria-labelledby="faq-title">
+  <div>
+    <p class="eyebrow">{copy.eyebrow}</p>
+    <h2 class="section-title" id="faq-title">{copy.title}</h2>
+    <p class="faq__lede">{copy.lede}</p>
+    <a
+      class="text-link"
+      href={whatsappUrl()}
+      target="_blank"
+      rel="noreferrer">{copy.cta} <span aria-hidden="true">↗</span></a
+    >
+  </div>
+  <Accordion items={items} />
+</section>
+
+<style>
+  .faq {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .faq__lede {
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+  @media (max-width: 860px) {
+    .faq {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,19 +1,23 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { whatsappUrl } from "../../lib/site";
+import { lowestStandardPrice } from "../../lib/tours";
 
 export async function getStaticPaths() {
   const tours = await getCollection("tours");
-  return tours.map((tour) => ({ params: { slug: tour.id }, props: { tour } }));
+  const englishIds = new Set(
+    (await getCollection("toursEn")).map((tour) => tour.id),
+  );
+  return tours.map((tour) => ({
+    params: { slug: tour.id },
+    props: { tour, hasEnglish: englishIds.has(tour.id) },
+  }));
 }
 
-const { tour } = Astro.props;
+const { tour, hasEnglish } = Astro.props;
 const { Content } = await render(tour);
-const standardPrices = tour.data.precios.filter(
-  (price) => price.tipo === "estandar",
-);
-const lowestPrice = Math.min(...standardPrices.map((price) => price.precio));
-const currency = standardPrices[0]?.moneda ?? "MXN";
+const price = lowestStandardPrice(tour.data.precios);
 const updatedDate = tour.data.ultima_actualizacion?.toLocaleDateString(
   "es-MX",
   { timeZone: "UTC", dateStyle: "long" },
@@ -30,7 +34,7 @@ const operatesThisMonth =
   ogImage={tour.data.seo.og_image}
   noindex={tour.data.seo.noindex}
   type="article"
-  alternateUrl={`/en/tours/${tour.id}/`}
+  alternateUrl={hasEnglish ? `/en/tours/${tour.id}/` : undefined}
 >
   <article class="container tour-detail">
     <div class="tour-detail__intro">
@@ -55,15 +59,30 @@ const operatesThisMonth =
       </div>
       <aside class="price-panel">
         <p class="eyebrow">Reserva tu lugar</p>
-        <p class="from-label">Desde</p>
-        <p class="price">
-          {currency} ${lowestPrice.toLocaleString("es-MX")}
-          <small>por persona</small>
-        </p>
+        {
+          price ? (
+            <>
+              <p class="from-label">Desde</p>
+              <p class="price">
+                {price.currency} ${price.amount.toLocaleString("es-MX")}
+                <small>por persona</small>
+              </p>
+            </>
+          ) : (
+            <p class="price">Precio a cotizar</p>
+          )
+        }
         <p class="price-note">{tour.data.nota_precio}</p>
-        <a class="button" href="https://wa.me/523221473221" data-whatsapp-cta
+        <a
+          class="button"
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noreferrer"
+          data-whatsapp-cta
           >{
-            operatesThisMonth
+            !price
+              ? "Cotizar por WhatsApp"
+              : operatesThisMonth
               ? "Consultar disponibilidad"
               : "Unirme a la lista de espera"
           }

@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import type { SiteLanguage } from "../../lib/site";
+import TourCard from "../TourCard.astro";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const tours = (await getCollection(lang === "en" ? "toursEn" : "tours")).sort(
+  (a, b) => a.data.orden - b.data.orden,
+);
+const copy =
+  lang === "en"
+    ? {
+        eyebrow: "Choose your route",
+        title: "Hidden Beach or a trip around the islands?",
+        lede: "Only some tours go into Hidden Beach. Compare them and pick the one that suits you.",
+        all: "See all tours",
+        href: "/en/tours/",
+      }
+    : {
+        eyebrow: "Elige tu ruta",
+        title: "¿Playa del Amor o recorrido por las islas?",
+        lede: "Solo algunos tours entran a la Playa Escondida. Compara y elige el que va contigo.",
+        all: "Ver todos",
+        href: "/tours/",
+      };
+---
+
+<section class="container section-space" aria-labelledby="tours-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h2 class="section-title" id="tours-title">{copy.title}</h2>
+      <p class="section-heading__lede">{copy.lede}</p>
+    </div>
+    <a class="text-link" href={copy.href}>{copy.all} <span aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="tour-grid">
+    {tours.map((tour) => <TourCard tour={tour} lang={lang} />)}
+  </div>
+</section>
+
+<style>
+  .section-heading__lede {
+    max-width: 52ch;
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+  .tour-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

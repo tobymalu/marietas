@@ -77,9 +77,15 @@ const copy =
     <meta name="description" content={description} />
     <link rel="canonical" href={currentUrl} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="alternate" hreflang={lang} href={currentUrl} />
-    <link rel="alternate" hreflang={alternateLanguage} href={alternateHref} />
-    <link rel="alternate" hreflang="x-default" href={defaultHref} />
+    {
+      alternateUrl && (
+        <>
+          <link rel="alternate" hreflang={lang} href={currentUrl} />
+          <link rel="alternate" hreflang={alternateLanguage} href={alternateHref} />
+          <link rel="alternate" hreflang="x-default" href={defaultHref} />
+        </>
+      )
+    }
     <meta property="og:locale" content={lang === "en" ? "en_US" : "es_MX"} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:type" content={type} />
@@ -92,10 +98,11 @@ const copy =
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
+    <slot name="head" />
   </head>
   <body>
     <GoogleTagManagerNoscript />
-    <Header lang={lang} />
+    <Header lang={lang} alternateUrl={alternateUrl} />
     <a class="skip-link" href="#main-content">{copy.skip}</a>
     <main id="main-content"><slot /></main>
     <Footer lang={lang} />

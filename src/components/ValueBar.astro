@@ -1,0 +1,93 @@
+---
+interface Item {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+interface Props {
+  items: Item[];
+  label: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<section class="value-bar" aria-label={label}>
+  <ul class="container value-bar__grid">
+    {
+      items.map((item) => (
+        <li>
+          <span class="value-bar__icon" aria-hidden="true">
+            {item.icon}
+          </span>
+          <div>
+            <h2>{item.title}</h2>
+            <p>{item.text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .value-bar {
+    background: var(--color-primary);
+    color: #f4efe5;
+  }
+  .value-bar__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-block: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: flex;
+    gap: 0.85rem;
+    padding: 1.6rem 1.25rem;
+    border-left: 1px solid #ffffff22;
+  }
+  li:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .value-bar__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  h2 {
+    margin: 0 0 0.3rem;
+    font-size: 0.95rem;
+  }
+  p {
+    margin: 0;
+    color: #cfe2dc;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+  @media (max-width: 900px) {
+    .value-bar__grid {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1.5rem;
+    }
+    li,
+    li:first-child {
+      padding: 1.25rem 0;
+      border-left: 0;
+      border-top: 1px solid #ffffff22;
+    }
+    li:nth-child(-n + 2) {
+      border-top: 0;
+    }
+  }
+  @media (max-width: 520px) {
+    .value-bar__grid {
+      grid-template-columns: 1fr;
+    }
+    li:nth-child(2) {
+      border-top: 1px solid #ffffff22;
+    }
+  }
+</style>

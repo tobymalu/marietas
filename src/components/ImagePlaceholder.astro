@@ -1,0 +1,58 @@
+---
+// Reserva el espacio exacto de una foto pendiente para que el layout no cambie
+// cuando se sustituya por la imagen real (mismo width/height).
+interface Props {
+  width: number;
+  height: number;
+  label: string;
+  class?: string;
+}
+
+const { width, height, label, class: className } = Astro.props;
+---
+
+<div
+  class:list={["image-placeholder", className]}
+  style={`aspect-ratio: ${width} / ${height};`}
+  role="img"
+  aria-label={`Foto pendiente: ${label}`}
+  data-placeholder
+>
+  <span>
+    <strong>Foto pendiente</strong>
+    {label}
+    <small>{width} × {height} px</small>
+  </span>
+</div>
+
+<style>
+  .image-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    color: var(--color-muted);
+    text-align: center;
+    background: repeating-linear-gradient(
+      135deg,
+      #e9e3d6 0 12px,
+      #efeadf 12px 24px
+    );
+    border: 1px dashed #b9c6c2;
+  }
+  span {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+  }
+  strong {
+    color: var(--color-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+  }
+  small {
+    font-variant-numeric: tabular-nums;
+  }
+</style>

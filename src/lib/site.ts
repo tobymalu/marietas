@@ -3,19 +3,27 @@ export const site = {
   url: "https://www.islamarietas.com",
   email: "info@islamarietas.com",
   phone: {
-    display: "+52 1 322 147 3221",
-    e164: "+5213221473221",
+    display: "+52 322 304 8986",
+    e164: "+523223048986",
   },
   whatsapp: {
-    number: "523221473221",
-    defaultMessage:
-      "Hola, quiero información sobre los tours a las Islas Marietas.",
+    number: "523223048986",
+    // Mensaje único para todos los CTA de WhatsApp (identifica que vienen del sitio).
+    message: "Vi en la página de Marietas tu contacto",
   },
   social: {
     instagram: "https://www.instagram.com/islamarietas",
     facebook: "https://www.facebook.com/islamarietas",
   },
 } as const;
+
+export const PARTNERS = [
+  { name: "Vallarta Mágico", url: "https://www.vallartamagico.com" },
+  { name: "Praben", url: "https://www.praben.com" },
+  { name: "Nubenca", url: "https://www.nubenca.com" },
+  { name: "PV Luxury Concierge", url: "https://pvluxuryconcierge.com" },
+  { name: "Hola Punta Mita", url: "https://holapuntamita.com" },
+] as const;
 
 export const NAV_LINKS = [
   { href: "/", label: "Inicio" },
@@ -42,6 +50,6 @@ export const languageLabels = {
   en: "English",
 } as const;
 
-export function whatsappUrl(message = site.whatsapp.defaultMessage) {
-  return `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(message)}`;
+export function whatsappUrl() {
+  return `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(site.whatsapp.message)}`;
 }

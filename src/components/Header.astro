@@ -8,14 +8,13 @@ import {
 } from "../lib/site";
 interface Props {
   lang?: SiteLanguage;
+  alternateUrl?: string;
 }
-const { lang = "es" } = Astro.props;
+const { lang = "es", alternateUrl } = Astro.props;
 const navLinks = lang === "en" ? NAV_LINKS_EN : NAV_LINKS;
 const currentPath = Astro.url.pathname;
-const languagePath =
-  lang === "es"
-    ? `/en${currentPath === "/" ? "/" : currentPath}`
-    : currentPath.replace(/^\/en/, "") || "/";
+// Sin traducción de la página actual, el cambio de idioma lleva al inicio.
+const languagePath = alternateUrl ?? (lang === "es" ? "/en/" : "/");
 const copy =
   lang === "en"
     ? {

@@ -1,0 +1,174 @@
+---
+import type { SiteLanguage } from "../lib/site";
+
+interface Photo {
+  src: string;
+  alt: string;
+  altEn?: string;
+  width: number;
+  height: number;
+  size?: "large" | "wide";
+}
+
+interface Props {
+  lang?: SiteLanguage;
+  eyebrow?: string;
+  title?: string;
+  photos?: Photo[];
+  link?: { href: string; label: string } | null;
+}
+
+const defaultPhotos: Photo[] = [
+  {
+    src: "/imgMarietas/playaEscondidaCompleta.jpg",
+    alt: "Playa Escondida vista desde dentro del cráter en las Islas Marietas",
+    altEn: "Hidden Beach seen from inside the crater in the Islas Marietas",
+    width: 3648,
+    height: 2736,
+    size: "large",
+  },
+  {
+    src: "/imgMarietas/AvesMarietas/bobo pata azules.jpg",
+    alt: "Pájaro bobo de patas azules posado sobre roca volcánica en las Islas Marietas",
+    altEn: "Blue-footed booby perched on volcanic rock in the Islas Marietas",
+    width: 1500,
+    height: 1000,
+  },
+  {
+    src: "/imgMarietas/FaunaMarMarietas/ballena jorobada.jpg",
+    alt: "Ballena jorobada saltando frente a las Islas Marietas en temporada",
+    altEn: "Humpback whale breaching off the Islas Marietas during whale season",
+    width: 600,
+    height: 400,
+  },
+  {
+    src: "/imgMarietas/DesdeElCielo.jpg",
+    alt: "Vista aérea del archipiélago de las Islas Marietas y su agua turquesa",
+    altEn: "Aerial view of the Islas Marietas archipelago and its turquoise water",
+    width: 1192,
+    height: 877,
+    size: "wide",
+  },
+  {
+    src: "/imgMarietas/PaddleMarietas.jpg",
+    alt: "Paddleboard junto a las formaciones rocosas de las Islas Marietas",
+    altEn: "Paddleboarding next to the rock formations of the Islas Marietas",
+    width: 1080,
+    height: 718,
+  },
+  {
+    src: "/imgMarietas/Kayak.jpeg",
+    alt: "Kayak navegando cerca de los arcos de roca de las Islas Marietas",
+    altEn: "Kayaking near the rock arches of the Islas Marietas",
+    width: 1280,
+    height: 855,
+  },
+];
+
+const { lang = "es" } = Astro.props;
+const en = lang === "en";
+const {
+  eyebrow = en ? "Gallery" : "Galería",
+  title = en ? "A day in the Islas Marietas" : "Así se vive un día en las Islas Marietas",
+  photos = defaultPhotos.map((photo) => ({
+    ...photo,
+    alt: en && photo.altEn ? photo.altEn : photo.alt,
+  })),
+  link = en
+    ? { href: "/en/gallery/", label: "See the full gallery" }
+    : { href: "/galeria/", label: "Ver galería completa" },
+} = Astro.props;
+---
+
+<section class="container section-space" aria-labelledby="gallery-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="section-title" id="gallery-title">{title}</h2>
+    </div>
+    {
+      link && (
+        <a class="text-link" href={link.href}>
+          {link.label} <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
+  <ul class="gallery">
+    {
+      photos.map((photo) => (
+        <li class:list={[photo.size && `gallery__item--${photo.size}`]}>
+          <img
+            src={photo.src}
+            alt={photo.alt}
+            width={photo.width}
+            height={photo.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: clamp(150px, 18vw, 220px);
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .gallery li {
+    overflow: hidden;
+    background: #e3ddd0;
+  }
+  .gallery__item--large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .gallery__item--wide {
+    grid-column: span 2;
+  }
+  .gallery img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .gallery li:hover img {
+    transform: scale(1.06);
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .gallery img {
+        scale: 1.12;
+        animation: gallery-parallax linear both;
+        animation-timeline: view();
+      }
+    }
+  }
+  @keyframes gallery-parallax {
+    from {
+      translate: 0 -5%;
+    }
+    to {
+      translate: 0 5%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gallery img {
+      transition: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .gallery {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 42vw;
+    }
+  }
+</style>

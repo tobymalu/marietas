@@ -1,0 +1,196 @@
+---
+import { site, type SiteLanguage } from "../../lib/site";
+import PageHero from "../PageHero.astro";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const today = new Date().toISOString().slice(0, 10);
+const copy =
+  lang === "en"
+    ? {
+        alt: "Aerial view of the Islas Marietas surrounded by the Pacific Ocean",
+        eyebrow: "Islas Marietas National Park · Nayarit",
+        title: "Discover Hidden Beach: your adventure to explore the Islas Marietas",
+        lede: "Sail with a local crew, swim in protected waters and explore one of the most special natural sanctuaries in the Mexican Pacific.",
+        trust: "Local operators · Access regulated by CONANP",
+        formTitle: "Check availability",
+        date: "Date",
+        guests: "Guests",
+        tour: "Tour type",
+        tours: [
+          "Hidden Beach tour",
+          "Eco Tour & Snorkeling (around the islands)",
+          "Private charter",
+        ],
+        submit: "See availability and dates",
+        note: "We reply on WhatsApp with real availability and the final price.",
+        locale: "en-US",
+        tbd: "to be confirmed",
+      }
+    : {
+        alt: "Vista aérea de las Islas Marietas rodeadas por el océano Pacífico",
+        eyebrow: "Parque Nacional Islas Marietas · Nayarit",
+        title: "Descubre la Playa Escondida: tu aventura creada para explorar las Islas Marietas",
+        lede: "Navega con un equipo local, nada en aguas protegidas y conoce uno de los santuarios naturales más especiales del Pacífico mexicano.",
+        trust: "Operadores locales · Acceso regulado por la CONANP",
+        formTitle: "Consulta disponibilidad",
+        date: "Fecha",
+        guests: "Pasajeros",
+        tour: "Tipo de tour",
+        tours: [
+          "Tour Playa Escondida (Playa del Amor)",
+          "Tour Ecológico & Snorkel (alrededores)",
+          "Chárter privado",
+        ],
+        submit: "Ver disponibilidad y fechas",
+        note: "Te respondemos por WhatsApp con disponibilidad real y precio final.",
+        locale: "es-MX",
+        tbd: "por definir",
+      };
+// Etiquetas del mensaje de WhatsApp que arma el formulario en el navegador.
+const messageLabels = {
+  locale: copy.locale,
+  tbd: copy.tbd,
+  tour: "Tour",
+  date: copy.date,
+  guests: copy.guests,
+};
+---
+
+<PageHero
+  image={{ src: "/imgMarietas/portada.jpg", alt: copy.alt, width: 1536, height: 1024 }}
+  eyebrow={copy.eyebrow}
+  title={copy.title}
+  lede={copy.lede}
+  trust={copy.trust}
+>
+  <form
+    class="booking"
+    data-booking-form
+    data-whatsapp={site.whatsapp.number}
+    data-message={site.whatsapp.message}
+    data-labels={JSON.stringify(messageLabels)}
+    action={`https://wa.me/${site.whatsapp.number}`}
+    method="get"
+  >
+    <p class="booking__title">{copy.formTitle}</p>
+    <label>
+      <span>{copy.date}</span>
+      <input type="date" name="fecha" min={today} required />
+    </label>
+    <label>
+      <span>{copy.guests}</span>
+      <input
+        type="number"
+        name="pasajeros"
+        min="1"
+        max="40"
+        value="2"
+        inputmode="numeric"
+        required
+      />
+    </label>
+    <label class="booking__wide">
+      <span>{copy.tour}</span>
+      <select name="tour">
+        {copy.tours.map((option) => <option>{option}</option>)}
+      </select>
+    </label>
+    <button class="button button--accent booking__wide" type="submit">
+      {copy.submit}
+    </button>
+    <p class="booking__note booking__wide">{copy.note}</p>
+  </form>
+</PageHero>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-booking-form]");
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const labels = JSON.parse(form.dataset.labels ?? "{}");
+    const data = new FormData(form);
+    const date = String(data.get("fecha") ?? "");
+    const formattedDate = date
+      ? new Date(`${date}T12:00:00`).toLocaleDateString(labels.locale, {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+      : labels.tbd;
+    const message = [
+      form.dataset.message,
+      `• ${labels.tour}: ${data.get("tour")}`,
+      `• ${labels.date}: ${formattedDate}`,
+      `• ${labels.guests}: ${data.get("pasajeros")}`,
+    ].join("\n");
+    (window as Window & { dataLayer?: object[] }).dataLayer?.push({
+      event: "booking_widget_submit",
+    });
+    window.open(
+      `https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener",
+    );
+  });
+</script>
+
+<style>
+  .booking {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    color: var(--color-foreground);
+    background: var(--color-background);
+    box-shadow: 0 24px 60px #0b262a55;
+  }
+  .booking__title {
+    grid-column: 1 / -1;
+    margin: 0;
+    font: 600 1.5rem/1.1 var(--font-display);
+  }
+  .booking label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+  .booking input,
+  .booking select {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 2.9rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid #c9d6d2;
+    background: white;
+    color: var(--color-foreground);
+    font: 500 1rem var(--font-body);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .booking input:focus-visible,
+  .booking select:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+  .booking__wide {
+    grid-column: 1 / -1;
+  }
+  .booking .button {
+    justify-content: center;
+    min-height: 3.2rem;
+    border: 0;
+  }
+  .booking__note {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+</style>

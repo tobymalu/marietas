@@ -163,6 +163,26 @@ button {
   font-size: 0.72rem;
   font-weight: 700;
 }
+.site-footer__partners {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ffffff25;
+}
+.site-footer__partners ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-footer__partners a {
+  margin: 0;
+}
+.site-footer__partners a:hover {
+  color: white;
+  text-decoration: underline;
+}
 .site-footer__bottom {
   margin-top: 3rem;
   padding-top: 1rem;
@@ -256,5 +276,69 @@ button {
   }
   .cookie-actions button {
     flex: 1;
+  }
+}
+
+/* Piezas compartidas de las páginas por secciones (home, nosotros…) */
+.sections .eyebrow {
+  margin: 0;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.sections .section-title {
+  max-width: 22ch;
+  margin: 0.5rem 0 1rem;
+  font: 600 clamp(2rem, 4vw, 3.2rem)/1.05 var(--font-display);
+  letter-spacing: -0.01em;
+}
+.sections .section-space {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+.sections .section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 2rem;
+}
+.sections .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  font-weight: 700;
+  transition: filter 0.2s ease;
+}
+.sections .button:hover {
+  filter: brightness(1.08);
+}
+.sections .button:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 2px;
+}
+.sections .button--primary {
+  background: var(--color-primary);
+  color: white;
+}
+.sections .button--accent {
+  background: var(--color-accent);
+  color: white;
+  font-size: 1rem;
+}
+.sections .text-link {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+@media (max-width: 720px) {
+  .sections .section-heading {
+    align-items: start;
+    flex-direction: column;
   }
 }

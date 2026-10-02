@@ -1,0 +1,167 @@
+---
+import type { SiteLanguage } from "../../lib/site";
+import ImagePlaceholder from "../ImagePlaceholder.astro";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const copy =
+  lang === "en"
+    ? { eyebrow: "Verified reviews", title: "What our guests say after sailing with us", stars: "out of 5 stars", via: "via" }
+    : { eyebrow: "Opiniones verificadas", title: "Lo que cuentan quienes ya navegaron con nosotros", stars: "de 5 estrellas", via: "vía" };
+
+interface Review {
+  name: string;
+  origin: string;
+  date: string;
+  rating: number;
+  text: string;
+  photo?: string;
+  source: "Google" | "TripAdvisor";
+}
+
+// Solo reseñas reales (copiadas de Google o TripAdvisor con permiso).
+// Mientras la lista esté vacía, en desarrollo se muestran huecos de maqueta y
+// en producción la sección no se publica.
+const reviews: Review[] = [];
+
+const showPlaceholders = reviews.length === 0 && import.meta.env.DEV;
+const slots = showPlaceholders ? [1, 2, 3] : [];
+---
+
+{
+  (reviews.length > 0 || showPlaceholders) && (
+    <section class="reviews" aria-labelledby="reviews-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">{copy.eyebrow}</p>
+            <h2 class="section-title" id="reviews-title">{copy.title}</h2>
+          </div>
+        </div>
+        <ul class="reviews__track">
+          {reviews.map((review) => (
+            <li>
+              <figure>
+                <p class="reviews__stars" aria-label={`${review.rating} ${copy.stars}`}>
+                  {"★".repeat(review.rating)}
+                  {"☆".repeat(5 - review.rating)}
+                </p>
+                <blockquote>{review.text}</blockquote>
+                <figcaption>
+                  {review.photo ? (
+                    <img src={review.photo} alt="" width="96" height="96" loading="lazy" />
+                  ) : (
+                    <span class="reviews__avatar" aria-hidden="true">
+                      {review.name.charAt(0)}
+                    </span>
+                  )}
+                  <span>
+                    <strong>{review.name}</strong>
+                    {review.origin} · {review.date} · {copy.via} {review.source}
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+          {slots.map((slot) => (
+            <li>
+              <figure>
+                <p class="reviews__stars">★★★★★</p>
+                <blockquote>[Reseña real #{slot} — pendiente de Google/TripAdvisor]</blockquote>
+                <figcaption>
+                  <ImagePlaceholder width={96} height={96} label="Foto cliente" class="reviews__photo" />
+                  <span>
+                    <strong>Nombre del cliente</strong>
+                    Ciudad · Fecha · vía Google
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .reviews {
+    padding-block: clamp(4rem, 8vw, 7rem);
+    background: var(--color-foreground);
+    color: #f4efe5;
+  }
+  .reviews .eyebrow {
+    color: #ffb08f;
+  }
+  .reviews__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 1fr);
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0 0 0.75rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .reviews__track li {
+    scroll-snap-align: start;
+  }
+  figure {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    background: #ffffff0d;
+    border: 1px solid #ffffff1f;
+  }
+  .reviews__stars {
+    margin: 0 0 0.8rem;
+    color: #ffc466;
+    letter-spacing: 0.1em;
+  }
+  blockquote {
+    flex: 1;
+    margin: 0 0 1.25rem;
+    font: 500 1.1rem/1.55 var(--font-display);
+  }
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #bed2ce;
+    font-size: 0.8rem;
+  }
+  figcaption > span {
+    display: grid;
+  }
+  figcaption strong {
+    color: white;
+    font-size: 0.9rem;
+  }
+  figcaption img,
+  .reviews__avatar,
+  figcaption :global(.reviews__photo) {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  figcaption :global(.reviews__photo) {
+    padding: 0;
+    font-size: 0;
+  }
+  .reviews__avatar {
+    display: grid;
+    place-items: center;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 700;
+  }
+</style>

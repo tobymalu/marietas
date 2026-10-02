@@ -22,8 +22,11 @@ const tourSchema = z.object({
   h1: z.string(),
   resumen: z.string(),
   seo: seoSchema,
-  precios: z.array(priceSchema).min(1),
+  // Vacío = tour "a cotizar" (se muestra sin precio y con CTA a WhatsApp).
+  precios: z.array(priceSchema).default([]),
   nota_precio: z.string(),
+  badges: z.array(z.string()).default([]),
+  orden: z.number().int().default(99),
   meses: z.array(z.number().int().min(1).max(12)).default([]),
   galeria: z.array(z.object({ imagen: z.string(), alt: z.string() })).min(1),
   duracion: z.string(),

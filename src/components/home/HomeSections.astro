@@ -1,0 +1,33 @@
+---
+// Cuerpo del home, compartido por / y /en/.
+import type { FaqItem } from "../../lib/home-content";
+import { getHomeValueProps } from "../../lib/home-content";
+import type { SiteLanguage } from "../../lib/site";
+import Gallery from "../Gallery.astro";
+import LocationMap from "../LocationMap.astro";
+import ValueBar from "../ValueBar.astro";
+import FAQSection from "./FAQSection.astro";
+import HeroSection from "./HeroSection.astro";
+import ParkInfo from "./ParkInfo.astro";
+import Testimonials from "./Testimonials.astro";
+import TourGrid from "./TourGrid.astro";
+
+interface Props {
+  lang?: SiteLanguage;
+  faq: FaqItem[];
+}
+
+const { lang = "es", faq } = Astro.props;
+const valueProps = getHomeValueProps(lang);
+---
+
+<div class="sections">
+  <HeroSection lang={lang} />
+  <ValueBar items={valueProps.items} label={valueProps.label} />
+  <TourGrid lang={lang} />
+  <ParkInfo lang={lang} />
+  <Gallery lang={lang} />
+  <Testimonials lang={lang} />
+  <FAQSection items={faq} lang={lang} />
+  <LocationMap lang={lang} />
+</div>

@@ -31,6 +31,8 @@ galeria:
     alt: Rocky entrance to Hidden Beach in the Islas Marietas
 duracion: 7 hours
 destacado: true
+orden: 1
+badges: [Limited spots, CONANP regulated]
 ultima_actualizacion: 2026-09-15
 ---
 

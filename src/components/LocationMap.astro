@@ -1,0 +1,73 @@
+---
+import type { SiteLanguage } from "../lib/site";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const copy =
+  lang === "en"
+    ? {
+        eyebrow: "Location",
+        title: "Where are the Islas Marietas?",
+        lede: "Off the coast of the Riviera Nayarit, in Banderas Bay, a short boat ride from La Cruz de Huanacaxtle.",
+        mapTitle: "Map showing the location of Hidden Beach in the Islas Marietas",
+      }
+    : {
+        eyebrow: "Ubicación",
+        title: "¿Dónde están las Islas Marietas?",
+        lede: "Frente a la costa de la Riviera Nayarit, en la Bahía de Banderas, a unos minutos en lancha desde La Cruz de Huanacaxtle.",
+        mapTitle: "Mapa de la ubicación de la Playa Escondida en las Islas Marietas",
+      };
+const mapSrc =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d153698.16373849835!2d-105.53186102380845!3d20.671232168969087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84216d83467cea7f%3A0x6676ae4a698bda06!2sPlaya%20Escondida!5e0!3m2!1ses-419!2smx!4v1790648985385!5m2!1ses-419!2smx";
+---
+
+<section class="container location" aria-labelledby="location-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h2 class="section-title" id="location-title">{copy.title}</h2>
+      <p class="location__lede">{copy.lede}</p>
+    </div>
+  </div>
+  <div class="location__map">
+    <iframe
+      src={mapSrc}
+      title={copy.mapTitle}
+      width="600"
+      height="450"
+      style="border:0;"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</section>
+
+<style>
+  .location {
+    padding-top: clamp(1rem, 3vw, 2rem);
+  }
+  .location__lede {
+    max-width: 52ch;
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+  .location__map {
+    border: 1px solid #dce5df;
+    background: #e3ddd0;
+  }
+  .location__map iframe {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  @media (max-width: 720px) {
+    .location__map iframe {
+      aspect-ratio: 4 / 5;
+    }
+  }
+</style>

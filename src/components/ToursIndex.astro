@@ -1,0 +1,97 @@
+---
+// Cuerpo de /tours/ y /en/tours/: intro + tarjetas + ayuda para elegir.
+import { getCollection } from "astro:content";
+import { whatsappUrl, type SiteLanguage } from "../lib/site";
+import TourCard from "./TourCard.astro";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const tours = (await getCollection(lang === "en" ? "toursEn" : "tours")).sort(
+  (a, b) => a.data.orden - b.data.orden,
+);
+const copy =
+  lang === "en"
+    ? {
+        eyebrow: "Islas Marietas tours",
+        title: "Choose how you want to explore the islands",
+        lede: "Hidden Beach, snorkeling around the archipelago or a private boat: compare each option and book with a local crew.",
+        helpTitle: "Not sure which tour to choose?",
+        helpText: "Tell us your date and group size and we’ll recommend the best option.",
+        helpCta: "Ask on WhatsApp",
+      }
+    : {
+        eyebrow: "Tours a las Islas Marietas",
+        title: "Elige cómo quieres conocer las islas",
+        lede: "Playa Escondida, snorkel alrededor del archipiélago o una embarcación privada: compara cada opción y reserva con un equipo local.",
+        helpTitle: "¿No sabes cuál elegir?",
+        helpText: "Cuéntanos tu fecha y cuántas personas son, y te recomendamos la mejor opción.",
+        helpCta: "Preguntar por WhatsApp",
+      };
+---
+
+<div class="sections">
+  <section class="container tours-intro">
+    <p class="eyebrow">{copy.eyebrow}</p>
+    <h1>{copy.title}</h1>
+    <p class="tours-intro__lede">{copy.lede}</p>
+  </section>
+
+  <section class="container tours-grid" aria-label={copy.eyebrow}>
+    {tours.map((tour) => <TourCard tour={tour} lang={lang} />)}
+  </section>
+
+  <section class="container tours-help">
+    <div>
+      <h2>{copy.helpTitle}</h2>
+      <p>{copy.helpText}</p>
+    </div>
+    <a class="button button--accent" href={whatsappUrl()} target="_blank" rel="noreferrer">
+      {copy.helpCta} <span aria-hidden="true">↗</span>
+    </a>
+  </section>
+</div>
+
+<style>
+  .tours-intro {
+    padding-block: clamp(4rem, 9vw, 7rem) 2.5rem;
+  }
+  .tours-intro h1 {
+    max-width: 18ch;
+    margin: 0.7rem 0 1rem;
+    font: 600 clamp(2.6rem, 6vw, 4.8rem)/1 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .tours-intro__lede {
+    max-width: 56ch;
+    color: var(--color-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+  .tours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .tours-help {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    background: var(--color-primary);
+    color: white;
+  }
+  .tours-help h2 {
+    margin: 0 0 0.4rem;
+    font: 600 clamp(1.5rem, 3vw, 2rem)/1.1 var(--font-display);
+  }
+  .tours-help p {
+    margin: 0;
+    color: #cfe2dc;
+  }
+</style>

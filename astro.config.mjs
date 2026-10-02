@@ -6,7 +6,13 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://www.islamarietas.com",
   output: "static",
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      // Páginas en borrador (noindex): quitar de aquí al publicarlas.
+      filter: (page) => !page.includes("/charter-privado-islas-marietas/"),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

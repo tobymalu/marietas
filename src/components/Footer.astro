@@ -1,5 +1,11 @@
 ---
-import { NAV_LINKS, NAV_LINKS_EN, site, type SiteLanguage } from "../lib/site";
+import {
+  NAV_LINKS,
+  NAV_LINKS_EN,
+  PARTNERS,
+  site,
+  type SiteLanguage,
+} from "../lib/site";
 interface Props {
   lang?: SiteLanguage;
 }
@@ -14,6 +20,7 @@ const copy =
         explore: "Explore",
         reserve: "Book your trip",
         rights: "All rights reserved.",
+        partners: "Business partners",
       }
     : {
         kicker: "Navega con intención",
@@ -22,6 +29,7 @@ const copy =
         explore: "Explora",
         reserve: "Reserva",
         rights: "Todos los derechos reservados.",
+        partners: "Socios comerciales",
       };
 ---
 
@@ -43,6 +51,20 @@ const copy =
       <a href={site.social.instagram}>Instagram</a>
     </div>
   </div>
+  <nav class="site-footer__partners" aria-label={copy.partners}>
+    <p class="footer-kicker">{copy.partners}</p>
+    <ul>
+      {
+        PARTNERS.map((partner) => (
+          <li>
+            <a href={partner.url} target="_blank" rel="noopener">
+              {partner.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
   <div class="site-footer__bottom">
     © {new Date().getFullYear()}
     {site.name}. {copy.rights}
