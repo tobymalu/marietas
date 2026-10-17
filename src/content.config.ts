@@ -24,7 +24,18 @@ const tourSchema = z.object({
   seo: seoSchema,
   // Vacío = tour "a cotizar" (se muestra sin precio y con CTA a WhatsApp).
   precios: z.array(priceSchema).default([]),
-  nota_precio: z.string(),
+  // Opcional si `cargos_muelle` es true: la nota se genera desde src/lib/park.ts.
+  nota_precio: z.string().optional(),
+  // true = el cliente paga en el muelle el brazalete ANP y el impuesto
+  // portuario (montos centralizados en src/lib/park.ts).
+  cargos_muelle: z.boolean().default(false),
+  horario: z
+    .object({
+      salida: z.string(),
+      dias: z.string(),
+      punto: z.string(),
+    })
+    .optional(),
   badges: z.array(z.string()).default([]),
   orden: z.number().int().default(99),
   meses: z.array(z.number().int().min(1).max(12)).default([]),

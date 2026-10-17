@@ -16,7 +16,11 @@ precios:
     precio: 600
     moneda: MXN
     tipo: estandar
-nota_precio: No incluye el impuesto de conservación del parque nacional (aprox. $180 MXN) ni el impuesto portuario (aprox. $30 MXN), que se pagan en el muelle.
+cargos_muelle: true
+horario:
+  salida: "9:00 AM"
+  dias: Martes a domingo, sujeto a condiciones del mar
+  punto: Puerto Vallarta
 meses: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 galeria:
   - imagen: /imgMarietas/Snorkeling.jpg
@@ -27,7 +31,7 @@ duracion: 8 horas
 destacado: false
 orden: 2
 badges: [Ideal para familias, Snorkel y kayak]
-ultima_actualizacion: 2026-09-28
+ultima_actualizacion: 2026-10-17
 ---
 
 Una jornada completa para nadar, remar y conocer la vida marina de las Islas Marietas, sin entrar a la Playa del Amor.
@@ -52,15 +56,12 @@ Una jornada completa para nadar, remar y conocer la vida marina de las Islas Mar
 
 ## No incluye
 
-- Impuesto de conservación del parque nacional (aprox. $180 MXN).
-- Impuesto portuario (aprox. $30 MXN).
+- Brazalete de Áreas Naturales Protegidas e impuesto portuario (se pagan en el muelle; ver montos vigentes en el recuadro de reserva).
 - Fotografías y souvenirs.
 - Propinas para la tripulación.
 
-## Horario
+## Duración
 
-- **Salida:** 8:00 AM desde Puerto Vallarta.
-- **Duración:** 8 horas aproximadamente.
-- **Días:** miércoles a domingo, sujeto a condiciones del mar.
+Aproximadamente 8 horas.
 
 Las condiciones climáticas o de marea pueden limitar el acceso a algunas zonas de las islas. Las reservas deben hacerse con al menos 24 horas de anticipación.

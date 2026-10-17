@@ -1,3 +1,4 @@
+import { pierFeesSentence } from "./park";
 import type { SiteLanguage } from "./site";
 
 type AddonPrice = { precio: number; moneda: string };
@@ -47,7 +48,7 @@ function buildFaqEs(addonPrice?: AddonPrice): FaqItem[] {
     },
     {
       question: "¿Qué incluye la tarifa y qué costos adicionales hay?",
-      answer: `Los tours compartidos incluyen traslado en barco, equipo de snorkel y guía especializado; lo demás varía según el tour y lo detallamos en cada ficha. ${bracelet} En el tour de snorkel, el impuesto de conservación del parque (aprox. $180 MXN) y el impuesto portuario (aprox. $30 MXN) se pagan aparte en el muelle. Te confirmamos el precio final por escrito antes de pagar.`,
+      answer: `Los tours compartidos incluyen traslado en barco, equipo de snorkel y guía especializado; lo demás varía según el tour y lo detallamos en cada ficha. ${bracelet} En el tour de snorkel, ${pierFeesSentence("es")} se pagan aparte en el muelle. Te confirmamos el precio final por escrito antes de pagar.`,
     },
     {
       question: "¿Cuál es la mejor época para visitar las Islas Marietas?",
@@ -98,7 +99,7 @@ function buildFaqEn(addonPrice?: AddonPrice): FaqItem[] {
     },
     {
       question: "What is included in the price and what are the extra costs?",
-      answer: `Shared tours include the boat ride, snorkeling gear and a specialized guide; everything else depends on the tour and is listed on each tour page. ${bracelet} On the snorkeling tour, the park conservation fee (approx. $180 MXN) and the port tax (approx. $30 MXN) are paid separately at the pier. We confirm the final price in writing before you pay.`,
+      answer: `Shared tours include the boat ride, snorkeling gear and a specialized guide; everything else depends on the tour and is listed on each tour page. ${bracelet} On the snorkeling tour, ${pierFeesSentence("en")} are paid separately at the pier. We confirm the final price in writing before you pay.`,
     },
     {
       question: "When is the best time to visit the Islas Marietas?",
@@ -126,7 +127,7 @@ export function getHomeValueProps(lang: SiteLanguage = "es") {
     ? {
         label: "Tour essentials",
         items: [
-          { icon: "🚤", title: "Departures Wednesday to Sunday", text: "From Puerto Vallarta and La Cruz de Huanacaxtle, depending on the tour." },
+          { icon: "🚤", title: "Departures Tuesday to Sunday", text: "From Puerto Vallarta and La Cruz de Huanacaxtle, depending on the tour." },
           { icon: "🎟️", title: "Transparent prices", text: "The CONANP Hidden Beach bracelet is quoted separately, no surprises." },
           { icon: "👥", title: "Small groups", text: "A personal experience, without the crowds." },
           { icon: "🐬", title: "Wildlife in its habitat", text: "Whales in season, dolphins and the blue-footed booby." },
@@ -135,7 +136,7 @@ export function getHomeValueProps(lang: SiteLanguage = "es") {
     : {
         label: "Lo esencial de tu tour",
         items: [
-          { icon: "🚤", title: "Salidas de miércoles a domingo", text: "Desde Puerto Vallarta y La Cruz de Huanacaxtle, según el tour." },
+          { icon: "🚤", title: "Salidas de martes a domingo", text: "Desde Puerto Vallarta y La Cruz de Huanacaxtle, según el tour." },
           { icon: "🎟️", title: "Precios transparentes", text: "El brazalete CONANP de Playa Escondida se cotiza aparte, sin sorpresas." },
           { icon: "👥", title: "Grupos reducidos", text: "Una experiencia personalizada, sin aglomeraciones." },
           { icon: "🐬", title: "Fauna en su hábitat", text: "Ballenas en temporada, delfines y el pájaro bobo de patas azules." },

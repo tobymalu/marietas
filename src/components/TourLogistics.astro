@@ -1,0 +1,114 @@
+---
+// Horario y cargos del muelle de un tour, generados desde los datos de la
+// ficha (`horario`, `cargos_muelle`) y las tarifas de src/lib/park.ts.
+import { formatFee, pierFees } from "../lib/park";
+import type { SiteLanguage } from "../lib/site";
+
+interface Props {
+  horario?: { salida: string; dias: string; punto: string };
+  cargosMuelle: boolean;
+  lang?: SiteLanguage;
+}
+
+const { horario, cargosMuelle, lang = "es" } = Astro.props;
+const copy =
+  lang === "en"
+    ? {
+        schedule: "Schedule",
+        departure: "Departure",
+        days: "Days",
+        from: "From",
+        fees: "Paid at the pier",
+        feesNote: "Official fees, not included in the tour price.",
+      }
+    : {
+        schedule: "Horario",
+        departure: "Salida",
+        days: "Días",
+        from: "Desde",
+        fees: "Se paga en el muelle",
+        feesNote: "Cargos oficiales, no incluidos en el precio del tour.",
+      };
+---
+
+{
+  (horario || cargosMuelle) && (
+    <div class="logistics">
+      {horario && (
+        <div>
+          <p class="logistics__title">{copy.schedule}</p>
+          <dl>
+            <div>
+              <dt>{copy.departure}</dt>
+              <dd>{horario.salida}</dd>
+            </div>
+            <div>
+              <dt>{copy.days}</dt>
+              <dd>{horario.dias}</dd>
+            </div>
+            <div>
+              <dt>{copy.from}</dt>
+              <dd>{horario.punto}</dd>
+            </div>
+          </dl>
+        </div>
+      )}
+      {cargosMuelle && (
+        <div>
+          <p class="logistics__title">{copy.fees}</p>
+          <dl>
+            {pierFees.items.map((fee) => (
+              <div>
+                <dt>{lang === "en" ? fee.en : fee.es}</dt>
+                <dd>{formatFee(fee.monto, lang)}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="logistics__note">{copy.feesNote}</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .logistics {
+    display: grid;
+    gap: 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .logistics__title {
+    margin: 0 0 0.5rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  dl {
+    margin: 0;
+    border-top: 1px solid #e6ece9;
+  }
+  dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #e6ece9;
+    font-size: 0.88rem;
+  }
+  dt {
+    color: var(--color-muted);
+  }
+  dd {
+    margin: 0;
+    color: var(--color-foreground);
+    font-weight: 700;
+    text-align: right;
+  }
+  .logistics__note {
+    margin: 0.5rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+</style>

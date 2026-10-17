@@ -2,7 +2,8 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import { whatsappUrl } from "../../../lib/site";
-import { lowestStandardPrice } from "../../../lib/tours";
+import TourLogistics from "../../../components/TourLogistics.astro";
+import { lowestStandardPrice, tourPriceNote } from "../../../lib/tours";
 
 export async function getStaticPaths() {
   const tours = await getCollection("toursEn");
@@ -12,6 +13,7 @@ export async function getStaticPaths() {
 const { tour } = Astro.props;
 const { Content } = await render(tour);
 const price = lowestStandardPrice(tour.data.precios);
+const priceNote = tourPriceNote(tour.data, "en");
 const updatedDate = tour.data.ultima_actualizacion?.toLocaleDateString(
   "en-US",
   { timeZone: "UTC", dateStyle: "long" },
@@ -60,7 +62,12 @@ const operatesThisMonth =
           ) : (
             <p class="price">Price on request</p>
           )
-        }<p class="price-note">{tour.data.nota_precio}</p><a
+        }<TourLogistics
+          horario={tour.data.horario}
+          cargosMuelle={tour.data.cargos_muelle}
+          lang="en"
+        />
+        {priceNote && <p class="price-note">{priceNote}</p>}<a
           class="button"
           href={whatsappUrl()}
           data-whatsapp-cta

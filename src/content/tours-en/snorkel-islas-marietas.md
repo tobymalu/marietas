@@ -16,7 +16,11 @@ precios:
     precio: 600
     moneda: MXN
     tipo: estandar
-nota_precio: Does not include the national park conservation fee (approx. $180 MXN) or the port tax (approx. $30 MXN), both paid at the pier.
+cargos_muelle: true
+horario:
+  salida: "9:00 AM"
+  dias: Tuesday to Sunday, subject to sea conditions
+  punto: Puerto Vallarta
 meses: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 galeria:
   - imagen: /imgMarietas/Snorkeling.jpg
@@ -27,7 +31,7 @@ duracion: 8 hours
 destacado: false
 orden: 2
 badges: [Family friendly, Snorkel & kayak]
-ultima_actualizacion: 2026-10-01
+ultima_actualizacion: 2026-10-17
 ---
 
 A full day to swim, paddle and discover the marine life of the Islas Marietas, without entering Hidden Beach.
@@ -52,15 +56,12 @@ A full day to swim, paddle and discover the marine life of the Islas Marietas, w
 
 ## Not included
 
-- National park conservation fee (approx. $180 MXN).
-- Port tax (approx. $30 MXN).
+- Protected Natural Areas bracelet and port tax (paid at the pier; see current amounts in the booking box).
 - Photos and souvenirs.
 - Tips for the crew.
 
-## Schedule
+## Duration
 
-- **Departure:** 8:00 AM from Puerto Vallarta.
-- **Duration:** about 8 hours.
-- **Days:** Wednesday to Sunday, subject to sea conditions.
+About 8 hours.
 
 Weather or tide conditions may limit access to some areas of the islands. Bookings must be made at least 24 hours in advance.

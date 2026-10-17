@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { whatsappUrl, type SiteLanguage } from "../lib/site";
-import { lowestStandardPrice } from "../lib/tours";
+import { lowestStandardPrice, tourPriceNote } from "../lib/tours";
 
 interface Props {
   tour: CollectionEntry<"tours"> | CollectionEntry<"toursEn">;
@@ -11,6 +11,7 @@ interface Props {
 const { tour, lang = "es" } = Astro.props;
 const data = tour.data;
 const price = lowestStandardPrice(data.precios);
+const priceNote = tourPriceNote(data, lang);
 const href = lang === "en" ? `/en/tours/${tour.id}/` : `/tours/${tour.id}/`;
 const locale = lang === "en" ? "en-US" : "es-MX";
 const copy =
@@ -59,10 +60,13 @@ const copy =
       }
       <span>· {data.duracion}</span>
     </div>
-    <p class="tour-card__note">
-      <span aria-hidden="true">ⓘ</span>
-      {data.nota_precio}
-    </p>
+    {
+      priceNote && (
+        <p class="tour-card__note">
+          <span aria-hidden="true">ⓘ</span> {priceNote}
+        </p>
+      )
+    }
     <div class="tour-card__actions">
       <a class="tour-card__button" href={href}>
         {copy.details} <span aria-hidden="true">→</span>
