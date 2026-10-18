@@ -17,13 +17,11 @@ interface TourPrice {
   tipo: string;
 }
 
-// Precio "desde" a partir de las tarifas estándar (sin addons).
+// Precio "desde" que se muestra en tarjetas y fichas: la tarifa de adulto,
+// que por convención es la PRIMERA tarifa estándar de `precios`.
 // Devuelve null cuando el tour se cotiza (sin precios publicados).
-export function lowestStandardPrice(precios: TourPrice[]) {
-  const standard = precios.filter((price) => price.tipo === "estandar");
-  if (standard.length === 0) return null;
-  return {
-    amount: Math.min(...standard.map((price) => price.precio)),
-    currency: standard[0].moneda,
-  };
+export function adultPrice(precios: TourPrice[]) {
+  const adult = precios.find((price) => price.tipo === "estandar");
+  if (!adult) return null;
+  return { amount: adult.precio, currency: adult.moneda };
 }

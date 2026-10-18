@@ -1,0 +1,34 @@
+---
+// Foto dentro del texto de una guía, a todo el ancho de la columna y sin
+// efectos encima.
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+}
+
+const { src, alt, width, height, caption } = Astro.props;
+---
+
+<figure class="guide-figure not-prose">
+  <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .guide-figure {
+    margin: 2.5rem 0;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  figcaption {
+    margin-top: 0.6rem;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+  }
+</style>

@@ -3,3 +3,5 @@ dist/
 .astro/
 .DS_Store
 *.log
+# Fotos originales en alta resolución (no se publican)
+fotos-originales/

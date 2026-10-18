@@ -1,0 +1,148 @@
+---
+// Tabla comparativa de tours para las guías. Precios, duración y horario salen
+// de las fichas de tours y de src/lib/park.ts: nunca se escriben a mano.
+import { getCollection } from "astro:content";
+import { formatFee, pierFees } from "../../lib/park";
+import type { SiteLanguage } from "../../lib/site";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const en = lang === "en";
+const locale = en ? "en-US" : "es-MX";
+const tours = await getCollection(en ? "toursEn" : "tours");
+const byId = (id: string) => tours.find((tour) => tour.id === id);
+const special = byId("playa-escondida");
+const classic = byId("snorkel-islas-marietas");
+
+const prices = (tour: typeof special) =>
+  tour?.data.precios
+    .filter((p) => p.tipo === "estandar")
+    .map((p) => `${p.etiqueta}: $${p.precio.toLocaleString(locale)} ${p.moneda}`)
+    .join(" · ") ?? "—";
+const fees = pierFees.items
+  .map((fee) => `${en ? fee.en : fee.es} ${formatFee(fee.monto, lang)}`)
+  .join(" + ");
+// Costos extra: addons de la ficha y, si aplica, los cargos del muelle.
+const extras = (tour: typeof special) => {
+  if (!tour) return "—";
+  const addons = tour.data.precios
+    .filter((p) => p.tipo === "addon")
+    .map((p) => `${p.etiqueta}: $${p.precio.toLocaleString(locale)} ${p.moneda}`);
+  if (tour.data.cargos_muelle) addons.push(fees);
+  return addons.join(" + ") || "—";
+};
+const base = en ? "/en/tours/" : "/tours/";
+
+const copy = en
+  ? {
+      caption: "Hidden Beach tour vs. classic Islas Marietas tour",
+      specialName: "Hidden Beach tour",
+      classicName: "Classic tour (snorkel & Nopalera)",
+      rows: [
+        ["Enters Hidden Beach", "Yes, with a CONANP time slot", "No"],
+        ["Price per person", prices(special), prices(classic)],
+        ["Extra costs (paid at the pier)", extras(special), extras(classic)],
+        ["Duration", special?.data.duracion ?? "—", classic?.data.duracion ?? "—"],
+        ["Activities", "Everything in the classic tour + 30 to 45 min inside Hidden Beach", "Snorkeling, kayak, paddleboard, Nopalera Beach, meals and open bar"],
+        ["Restrictions", "Ages 12 to 60 only, must know how to swim, limited spots", "Open to all ages"],
+        ["Best for", "Swimmers aged 12 to 60 who want the iconic beach", "Families with kids and first-time visitors"],
+      ],
+      details: "View tour",
+    }
+  : {
+      caption: "Tour Playa Escondida vs. tour tradicional a las Islas Marietas",
+      specialName: "Tour Playa Escondida",
+      classicName: "Tour tradicional (snorkel y Nopalera)",
+      rows: [
+        ["Entra a la Playa del Amor", "Sí, con horario asignado por la CONANP", "No"],
+        ["Precio por persona", prices(special), prices(classic)],
+        ["Costos extra (en el muelle)", extras(special), extras(classic)],
+        ["Duración", special?.data.duracion ?? "—", classic?.data.duracion ?? "—"],
+        ["Actividades", "Todo lo del tour tradicional + 30 a 45 min dentro de la Playa Escondida", "Snorkel, kayak, paddleboard, Playa Nopalera, comida y barra libre"],
+        ["Restricciones", "Solo de 12 a 60 años, saber nadar, cupo limitado", "Apto para todas las edades"],
+        ["Ideal para", "Nadadores de 12 a 60 años que quieren la playa icónica", "Familias con niños y quienes visitan por primera vez"],
+      ],
+      details: "Ver tour",
+    };
+---
+
+<div class="comparison not-prose">
+  <table>
+    <caption>{copy.caption}</caption>
+    <thead>
+      <tr>
+        <td></td>
+        <th scope="col">
+          <a href={`${base}playa-escondida/`}>{copy.specialName}</a>
+        </th>
+        <th scope="col">
+          <a href={`${base}snorkel-islas-marietas/`}>{copy.classicName}</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        copy.rows.map(([label, a, b]) => (
+          <tr>
+            <th scope="row">{label}</th>
+            <td>{a}</td>
+            <td>{b}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .comparison {
+    margin: 2rem 0;
+    overflow-x: auto;
+    border: 1px solid #dce5df;
+    background: white;
+  }
+  table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  caption {
+    padding: 1rem 1.1rem;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    text-align: left;
+  }
+  th,
+  td {
+    padding: 0.85rem 1.1rem;
+    border-top: 1px solid #e6ece9;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    background: var(--color-primary);
+    font: 600 1.05rem/1.2 var(--font-display);
+  }
+  thead th a {
+    color: white;
+  }
+  thead th a:hover {
+    text-decoration: underline;
+  }
+  thead td {
+    background: var(--color-primary);
+  }
+  tbody th {
+    width: 26%;
+    color: var(--color-foreground);
+    font-weight: 700;
+  }
+  tbody td {
+    color: var(--color-muted);
+  }
+</style>

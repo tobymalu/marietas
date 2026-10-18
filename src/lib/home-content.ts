@@ -1,7 +1,6 @@
 import { pierFeesSentence } from "./park";
 import type { SiteLanguage } from "./site";
 
-type AddonPrice = { precio: number; moneda: string };
 
 // Textos informativos del Home. Revisar con la información oficial de la
 // CONANP antes de cada temporada: estos datos alimentan también el JSON-LD.
@@ -20,12 +19,12 @@ const parkInfoEs: FaqItem[] = [
   {
     question: "¿Qué días cierra el parque?",
     answer:
-      "El acceso a la Playa del Amor opera normalmente de miércoles a domingo; lunes y martes permanece cerrado para la recuperación del ecosistema. La CONANP también puede suspender el acceso por clima o mantenimiento, así que confirmamos cada fecha antes de reservar.",
+      "El parque cierra los lunes. La Playa del Amor cierra lunes y martes para la recuperación del ecosistema, así que solo se puede visitar de miércoles a domingo; los demás recorridos, como el de snorkel, operan de martes a domingo. La CONANP también puede suspender el acceso por clima o mantenimiento, así que confirmamos cada fecha antes de reservar.",
   },
   {
     question: "¿Qué condición física se necesita para entrar por la cueva?",
     answer:
-      "Para llegar a la playa se nada un tramo corto por un túnel natural, con chaleco salvavidas obligatorio. Es necesario saber nadar y sentirse cómodo en el mar; con marea alta u oleaje el acceso puede suspenderse por seguridad.",
+      "Para llegar a la playa se nada un tramo corto por un túnel natural, con chaleco salvavidas obligatorio. Solo pueden entrar personas de 12 a 60 años que sepan nadar y se sientan cómodas en el mar; con marea alta u oleaje el acceso puede suspenderse por seguridad.",
   },
   {
     question: "¿Qué no se permite dentro del parque?",
@@ -34,21 +33,17 @@ const parkInfoEs: FaqItem[] = [
   },
 ];
 
-function buildFaqEs(addonPrice?: AddonPrice): FaqItem[] {
-  const bracelet = addonPrice
-    ? `El brazalete de acceso a la Playa Escondida cuesta $${addonPrice.precio.toLocaleString("es-MX")} ${addonPrice.moneda} adicionales y está sujeto a la disponibilidad de la CONANP.`
-    : "El brazalete de acceso a la Playa Escondida se cotiza aparte y está sujeto a la disponibilidad de la CONANP.";
-
+function buildFaqEs(): FaqItem[] {
   return [
     {
       question:
         "¿Cuál es la diferencia entre el tour a la Playa del Amor y el tour tradicional?",
       answer:
-        "El tour a la Playa del Amor incluye el acceso regulado a la Playa Escondida, con cupo limitado por la CONANP. El tour tradicional recorre los alrededores del archipiélago con snorkel, kayak y visita a la Playa Nopalera, sin entrar a la Playa del Amor.",
+        "Es el mismo día completo: snorkel, kayak, paddleboard, Playa Nopalera, desayuno, comida y barra libre. El tour Playa Escondida suma 30 a 45 minutos dentro de la Playa del Amor, con cupo limitado por la CONANP y solo para personas de 12 a 60 años. El tour tradicional no entra a la Playa del Amor y es ideal para familias con niños.",
     },
     {
       question: "¿Qué incluye la tarifa y qué costos adicionales hay?",
-      answer: `Los tours compartidos incluyen traslado en barco, equipo de snorkel y guía especializado; lo demás varía según el tour y lo detallamos en cada ficha. ${bracelet} En el tour de snorkel, ${pierFeesSentence("es")} se pagan aparte en el muelle. Te confirmamos el precio final por escrito antes de pagar.`,
+      answer: `Ambos tours incluyen traslado en barco, desayuno, comida parrillada, barra libre en el regreso, equipo de snorkel, kayak y paddleboard, y guía. Aparte, en el muelle se pagan ${pierFeesSentence("es")} por persona. Te confirmamos el precio final por escrito antes de pagar.`,
     },
     {
       question: "¿Cuál es la mejor época para visitar las Islas Marietas?",
@@ -58,7 +53,7 @@ function buildFaqEs(addonPrice?: AddonPrice): FaqItem[] {
     {
       question: "¿Pueden ir niños o adultos mayores?",
       answer:
-        "Sí. Hay tarifa infantil para niños de 6 a 11 años. Para entrar a la Playa del Amor hay que nadar un tramo corto, así que escríbenos por WhatsApp y te recomendamos la opción adecuada según la edad y condición de cada persona.",
+        "En el tour tradicional sí: hay tarifa de menores (6 a 11 años) e infantes (1 a 5 años). A la Playa del Amor solo pueden entrar personas de 12 a 60 años, así que si viajas con niños o adultos mayores, el tour tradicional es la mejor opción.",
     },
   ];
 }
@@ -72,12 +67,12 @@ const parkInfoEn: FaqItem[] = [
   {
     question: "Which days is the park closed?",
     answer:
-      "Access to Hidden Beach normally runs Wednesday to Sunday; it is closed on Mondays and Tuesdays so the ecosystem can recover. CONANP may also close access due to weather or maintenance, so we confirm every date before you book.",
+      "The park is closed on Mondays. Hidden Beach is closed on Mondays and Tuesdays so the ecosystem can recover, so you can only visit it Wednesday to Sunday; other trips, like the snorkeling tour, run Tuesday to Sunday. CONANP may also close access due to weather or maintenance, so we confirm every date before you book.",
   },
   {
     question: "How fit do I need to be to swim through the cave?",
     answer:
-      "To reach the beach you swim a short stretch through a natural tunnel, wearing a mandatory life jacket. You need to know how to swim and feel comfortable in the ocean; at high tide or with big swells, access may be suspended for safety.",
+      "To reach the beach you swim a short stretch through a natural tunnel, wearing a mandatory life jacket. Only people aged 12 to 60 who know how to swim and feel comfortable in the ocean can enter; at high tide or with big swells, access may be suspended for safety.",
   },
   {
     question: "What is not allowed inside the park?",
@@ -86,20 +81,16 @@ const parkInfoEn: FaqItem[] = [
   },
 ];
 
-function buildFaqEn(addonPrice?: AddonPrice): FaqItem[] {
-  const bracelet = addonPrice
-    ? `The Hidden Beach access bracelet costs an extra $${addonPrice.precio.toLocaleString("en-US")} ${addonPrice.moneda} and is subject to CONANP availability.`
-    : "The Hidden Beach access bracelet is quoted separately and is subject to CONANP availability.";
-
+function buildFaqEn(): FaqItem[] {
   return [
     {
       question: "What is the difference between the Hidden Beach tour and the classic tour?",
       answer:
-        "The Hidden Beach tour includes regulated access to the beach, with limited spots set by CONANP. The classic tour explores the archipelago with snorkeling, kayaking and a stop at Nopalera Beach, without entering Hidden Beach.",
+        "It is the same full day: snorkeling, kayaking, paddleboarding, Nopalera Beach, breakfast, lunch and open bar. The Hidden Beach tour adds 30 to 45 minutes inside Hidden Beach, with limited spots set by CONANP and only for ages 12 to 60. The classic tour does not enter Hidden Beach and is ideal for families with kids.",
     },
     {
       question: "What is included in the price and what are the extra costs?",
-      answer: `Shared tours include the boat ride, snorkeling gear and a specialized guide; everything else depends on the tour and is listed on each tour page. ${bracelet} On the snorkeling tour, ${pierFeesSentence("en")} are paid separately at the pier. We confirm the final price in writing before you pay.`,
+      answer: `Both tours include the boat ride, breakfast, grilled lunch, an open bar on the way back, snorkeling, kayak and paddleboard gear, and a guide. Separately, ${pierFeesSentence("en")} are paid at the pier per person. We confirm the final price in writing before you pay.`,
     },
     {
       question: "When is the best time to visit the Islas Marietas?",
@@ -109,7 +100,7 @@ function buildFaqEn(addonPrice?: AddonPrice): FaqItem[] {
     {
       question: "Can children or older adults come?",
       answer:
-        "Yes. There is a child rate for ages 6 to 11. Getting into Hidden Beach requires a short swim, so message us on WhatsApp and we’ll recommend the right option for each person’s age and fitness.",
+        "On the classic tour, yes: there are child (6 to 11) and infant (1 to 5) rates. Hidden Beach is only open to ages 12 to 60, so if you are traveling with kids or older adults, the classic tour is the best choice.",
     },
   ];
 }
@@ -118,8 +109,8 @@ export function getParkInfo(lang: SiteLanguage = "es") {
   return lang === "en" ? parkInfoEn : parkInfoEs;
 }
 
-export function buildFaq(lang: SiteLanguage = "es", addonPrice?: AddonPrice) {
-  return lang === "en" ? buildFaqEn(addonPrice) : buildFaqEs(addonPrice);
+export function buildFaq(lang: SiteLanguage = "es") {
+  return lang === "en" ? buildFaqEn() : buildFaqEs();
 }
 
 export function getHomeValueProps(lang: SiteLanguage = "es") {
@@ -127,8 +118,8 @@ export function getHomeValueProps(lang: SiteLanguage = "es") {
     ? {
         label: "Tour essentials",
         items: [
-          { icon: "🚤", title: "Departures Tuesday to Sunday", text: "From Puerto Vallarta and La Cruz de Huanacaxtle, depending on the tour." },
-          { icon: "🎟️", title: "Transparent prices", text: "The CONANP Hidden Beach bracelet is quoted separately, no surprises." },
+          { icon: "🚤", title: "Departures Tuesday to Sunday", text: "From the Puerto Vallarta Cruise Terminal, with a Nuevo Vallarta pickup." },
+          { icon: "🎟️", title: "Transparent prices", text: "The CONANP bracelet and port tax are paid separately at the pier, no surprises." },
           { icon: "👥", title: "Small groups", text: "A personal experience, without the crowds." },
           { icon: "🐬", title: "Wildlife in its habitat", text: "Whales in season, dolphins and the blue-footed booby." },
         ],
@@ -136,8 +127,8 @@ export function getHomeValueProps(lang: SiteLanguage = "es") {
     : {
         label: "Lo esencial de tu tour",
         items: [
-          { icon: "🚤", title: "Salidas de martes a domingo", text: "Desde Puerto Vallarta y La Cruz de Huanacaxtle, según el tour." },
-          { icon: "🎟️", title: "Precios transparentes", text: "El brazalete CONANP de Playa Escondida se cotiza aparte, sin sorpresas." },
+          { icon: "🚤", title: "Salidas de martes a domingo", text: "Desde la Terminal Marítima de Puerto Vallarta, con punto alterno en Nuevo Vallarta." },
+          { icon: "🎟️", title: "Precios transparentes", text: "El brazalete CONANP y el impuesto portuario se pagan aparte en el muelle, sin sorpresas." },
           { icon: "👥", title: "Grupos reducidos", text: "Una experiencia personalizada, sin aglomeraciones." },
           { icon: "🐬", title: "Fauna en su hábitat", text: "Ballenas en temporada, delfines y el pájaro bobo de patas azules." },
         ],

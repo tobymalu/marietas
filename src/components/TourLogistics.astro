@@ -5,7 +5,14 @@ import { formatFee, pierFees } from "../lib/park";
 import type { SiteLanguage } from "../lib/site";
 
 interface Props {
-  horario?: { salida: string; dias: string; punto: string };
+  horario?: {
+    salida: string;
+    regreso?: string;
+    presentarse?: string;
+    dias: string;
+    punto: string;
+    punto_alterno?: string;
+  };
   cargosMuelle: boolean;
   lang?: SiteLanguage;
 }
@@ -16,16 +23,22 @@ const copy =
     ? {
         schedule: "Schedule",
         departure: "Departure",
+        back: "Return",
+        arrive: "Check-in",
         days: "Days",
         from: "From",
+        alt: "Also from",
         fees: "Paid at the pier",
         feesNote: "Official fees, not included in the tour price.",
       }
     : {
         schedule: "Horario",
         departure: "Salida",
+        back: "Regreso",
+        arrive: "Presentarse",
         days: "Días",
         from: "Desde",
+        alt: "También desde",
         fees: "Se paga en el muelle",
         feesNote: "Cargos oficiales, no incluidos en el precio del tour.",
       };
@@ -42,6 +55,18 @@ const copy =
               <dt>{copy.departure}</dt>
               <dd>{horario.salida}</dd>
             </div>
+            {horario.regreso && (
+              <div>
+                <dt>{copy.back}</dt>
+                <dd>{horario.regreso}</dd>
+              </div>
+            )}
+            {horario.presentarse && (
+              <div>
+                <dt>{copy.arrive}</dt>
+                <dd>{horario.presentarse}</dd>
+              </div>
+            )}
             <div>
               <dt>{copy.days}</dt>
               <dd>{horario.dias}</dd>
@@ -50,6 +75,12 @@ const copy =
               <dt>{copy.from}</dt>
               <dd>{horario.punto}</dd>
             </div>
+            {horario.punto_alterno && (
+              <div>
+                <dt>{copy.alt}</dt>
+                <dd>{horario.punto_alterno}</dd>
+              </div>
+            )}
           </dl>
         </div>
       )}

@@ -16,12 +16,6 @@ export function travelAgencySchema() {
     telephone: site.phone.e164,
     email: site.email,
     areaServed: "Islas Marietas, Bahía de Banderas, Nayarit, México",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "La Cruz de Huanacaxtle",
-      addressRegion: "Nayarit",
-      addressCountry: "MX",
-    },
     sameAs: [site.social.instagram, site.social.facebook],
   };
 }

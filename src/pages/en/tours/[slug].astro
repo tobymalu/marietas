@@ -2,8 +2,9 @@
 import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import { whatsappUrl } from "../../../lib/site";
+import PhotoCarousel from "../../../components/PhotoCarousel.astro";
 import TourLogistics from "../../../components/TourLogistics.astro";
-import { lowestStandardPrice, tourPriceNote } from "../../../lib/tours";
+import { adultPrice, tourPriceNote } from "../../../lib/tours";
 
 export async function getStaticPaths() {
   const tours = await getCollection("toursEn");
@@ -12,7 +13,7 @@ export async function getStaticPaths() {
 
 const { tour } = Astro.props;
 const { Content } = await render(tour);
-const price = lowestStandardPrice(tour.data.precios);
+const price = adultPrice(tour.data.precios);
 const priceNote = tourPriceNote(tour.data, "en");
 const updatedDate = tour.data.ultima_actualizacion?.toLocaleDateString(
   "en-US",
@@ -33,18 +34,27 @@ const operatesThisMonth =
   type="article"
   alternateUrl={`/tours/${tour.id}/`}
 >
-  <article class="container tour-detail">
-    <div class="tour-detail__intro">
+  <article class="tour-detail">
+    <div class="container">
+      <div class="tour-detail__intro">
       <p class="eyebrow">{tour.data.duracion} · Islas Marietas</p><h1>
         {tour.data.h1}
       </h1><p class="tour-detail__summary">{tour.data.resumen}</p>
-    </div><div class="tour-detail__gallery">
-      {
-        tour.data.galeria.map((image) => (
-          <img src={image.imagen} alt={image.alt} width="900" height="600" />
-        ))
-      }
-    </div><div class="tour-detail__columns">
+    </div>
+    </div>
+    <div class="tour-detail__carousel">
+      <PhotoCarousel
+        photos={tour.data.galeria.map((image) => ({
+          url: image.imagen,
+          alt: image.alt,
+          width: image.width,
+          height: image.height,
+        }))}
+        lang="en"
+        priority
+      />
+    </div>
+    <div class="container tour-detail__columns">
       <div class="prose">
         <Content />{
           updatedDate && <p class="updated">Last updated: {updatedDate}</p>
@@ -102,18 +112,8 @@ const operatesThisMonth =
     font-size: 1.2rem;
     line-height: 1.7;
   }
-  .tour-detail__gallery {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 1rem;
+  .tour-detail__carousel {
     margin-block: 3rem 4rem;
-  }
-  .tour-detail__gallery img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: 280px;
-    object-fit: cover;
   }
   .tour-detail__columns {
     display: grid;
@@ -176,7 +176,6 @@ const operatesThisMonth =
     font-weight: 700;
   }
   @media (max-width: 720px) {
-    .tour-detail__gallery,
     .tour-detail__columns {
       grid-template-columns: 1fr;
     }

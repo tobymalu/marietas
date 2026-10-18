@@ -1,20 +1,16 @@
 ---
-import { getCollection } from "astro:content";
 import HomeSections from "../../components/home/HomeSections.astro";
 import Layout from "../../layouts/Layout.astro";
 import { buildFaq, getParkInfo } from "../../lib/home-content";
 import { faqSchema, travelAgencySchema } from "../../lib/schema";
 
-const accessAddon = (await getCollection("toursEn"))
-  .flatMap((tour) => tour.data.precios)
-  .find((price) => price.tipo === "addon");
-const faq = buildFaq("en", accessAddon);
+const faq = buildFaq("en");
 ---
 
 <Layout
   lang="en"
   title="Islas Marietas & Hidden Beach Tours | 2026 Prices"
-  description="Book your Islas Marietas tour to Hidden Beach from La Cruz de Huanacaxtle. Clear prices, small groups and local guides."
+  description="Book your Islas Marietas tour to Hidden Beach from Puerto Vallarta. Clear prices, small groups and local guides."
   alternateUrl="/"
 >
   <script

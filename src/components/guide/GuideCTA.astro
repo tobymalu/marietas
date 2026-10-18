@@ -1,0 +1,79 @@
+---
+// Llamada a la acción al final de una guía: tours + WhatsApp.
+import { whatsappUrl, type SiteLanguage } from "../../lib/site";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+const copy =
+  lang === "en"
+    ? {
+        title: "Ready to visit Hidden Beach?",
+        text: "Check availability for your date. We confirm your CONANP time slot and the final price before you pay.",
+        tours: "See our tours",
+        toursHref: "/en/tours/",
+        whatsapp: "Ask on WhatsApp",
+      }
+    : {
+        title: "¿Listo para conocer la Playa Escondida?",
+        text: "Consulta disponibilidad para tu fecha. Te confirmamos el horario CONANP y el precio final antes de pagar.",
+        tours: "Ver nuestros tours",
+        toursHref: "/tours/",
+        whatsapp: "Preguntar por WhatsApp",
+      };
+---
+
+<aside class="guide-cta not-prose">
+  <div>
+    <p class="guide-cta__title">{copy.title}</p>
+    <p>{copy.text}</p>
+  </div>
+  <div class="guide-cta__actions">
+    <a class="guide-cta__button" href={copy.toursHref}>{copy.tours} <span aria-hidden="true">→</span></a>
+    <a class="guide-cta__link" href={whatsappUrl()} target="_blank" rel="noreferrer"
+      >{copy.whatsapp} <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</aside>
+
+<style>
+  .guide-cta {
+    display: grid;
+    gap: 1.25rem;
+    margin: 3rem 0 0;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    background: var(--color-primary);
+    color: white;
+  }
+  .guide-cta__title {
+    margin: 0 0 0.4rem;
+    font: 600 clamp(1.5rem, 3vw, 2rem)/1.1 var(--font-display);
+  }
+  .guide-cta p:not(.guide-cta__title) {
+    margin: 0;
+    color: #cfe2dc;
+    line-height: 1.6;
+  }
+  .guide-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .guide-cta__button {
+    display: inline-flex;
+    gap: 0.5rem;
+    padding: 0.85rem 1.2rem;
+    background: var(--color-accent);
+    color: white;
+    font-weight: 700;
+  }
+  .guide-cta__link {
+    color: white;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

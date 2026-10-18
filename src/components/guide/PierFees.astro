@@ -1,0 +1,13 @@
+---
+// Cargos del muelle vigentes, para usar dentro del texto de una guía (MDX).
+import { pierFeesSentence } from "../../lib/park";
+import type { SiteLanguage } from "../../lib/site";
+
+interface Props {
+  lang?: SiteLanguage;
+}
+
+const { lang = "es" } = Astro.props;
+---
+
+{pierFeesSentence(lang)}

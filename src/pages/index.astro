@@ -1,19 +1,15 @@
 ---
-import { getCollection } from "astro:content";
 import HomeSections from "../components/home/HomeSections.astro";
 import Layout from "../layouts/Layout.astro";
 import { buildFaq, getParkInfo } from "../lib/home-content";
 import { faqSchema, travelAgencySchema } from "../lib/schema";
 
-const accessAddon = (await getCollection("tours"))
-  .flatMap((tour) => tour.data.precios)
-  .find((price) => price.tipo === "addon");
-const faq = buildFaq("es", accessAddon);
+const faq = buildFaq("es");
 ---
 
 <Layout
   title="Tours a Islas Marietas y Playa del Amor | Precios 2026"
-  description="Reserva tu tour a las Islas Marietas y la Playa Escondida (Playa del Amor) desde La Cruz de Huanacaxtle. Precios claros, grupos reducidos y guías locales."
+  description="Reserva tu tour a las Islas Marietas y la Playa Escondida (Playa del Amor) desde Puerto Vallarta. Precios claros, grupos reducidos y guías locales."
   alternateUrl="/en/"
 >
   <script

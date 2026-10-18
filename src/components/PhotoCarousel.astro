@@ -1,0 +1,211 @@
+---
+// Carrusel de fotos a pantalla completa, sin overlays ni degradados: la foto
+// manda. Los controles y el pie de foto van debajo de la imagen.
+import type { SiteLanguage } from "../lib/site";
+
+interface Photo {
+  url: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  photos: Photo[];
+  lang?: SiteLanguage;
+  /** true para la foto principal de la página (carga prioritaria). */
+  priority?: boolean;
+}
+
+const { photos, lang = "es", priority = false } = Astro.props;
+const copy =
+  lang === "en"
+    ? { label: "Photo gallery", prev: "Previous photo", next: "Next photo", goTo: "Go to photo", of: "of" }
+    : { label: "Galería de fotos", prev: "Foto anterior", next: "Foto siguiente", goTo: "Ir a la foto", of: "de" };
+---
+
+<div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label={copy.label}>
+  <div class="carousel__track" data-carousel-track tabindex="0">
+    {
+      photos.map((photo, index) => (
+        <figure
+          class="carousel__slide"
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${index + 1} ${copy.of} ${photos.length}`}
+        >
+          <img
+            src={photo.url}
+            alt={photo.alt}
+            width={photo.width}
+            height={photo.height}
+            loading={priority && index === 0 ? "eager" : "lazy"}
+            fetchpriority={priority && index === 0 ? "high" : "auto"}
+            decoding="async"
+          />
+        </figure>
+      ))
+    }
+  </div>
+
+  <div class="carousel__bar container">
+    <p class="carousel__caption" data-carousel-caption aria-live="polite">{photos[0].alt}</p>
+    {
+      photos.length > 1 && (
+        <div class="carousel__controls">
+          <div class="carousel__dots">
+            {photos.map((_, index) => (
+              <button
+                type="button"
+                class="carousel__dot"
+                data-carousel-dot={index}
+                aria-label={`${copy.goTo} ${index + 1}`}
+                aria-current={index === 0 ? "true" : undefined}
+              />
+            ))}
+          </div>
+          <button type="button" class="carousel__arrow" data-carousel-prev aria-label={copy.prev}>
+            ←
+          </button>
+          <button type="button" class="carousel__arrow" data-carousel-next aria-label={copy.next}>
+            →
+          </button>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>("[data-carousel-track]");
+    const caption = carousel.querySelector<HTMLElement>("[data-carousel-caption]");
+    const dots = [...carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]")];
+    if (!track) return;
+    const slides = [...track.children] as HTMLElement[];
+
+    const current = () => Math.round(track.scrollLeft / track.clientWidth);
+    const goTo = (index: number) => {
+      const target = (index + slides.length) % slides.length;
+      track.scrollTo({ left: target * track.clientWidth, behavior: "smooth" });
+    };
+    const update = () => {
+      const index = current();
+      dots.forEach((dot, i) => dot.setAttribute("aria-current", String(i === index)));
+      const img = slides[index]?.querySelector("img");
+      if (caption && img) caption.textContent = img.alt;
+    };
+
+    carousel.querySelector("[data-carousel-prev]")?.addEventListener("click", () => goTo(current() - 1));
+    carousel.querySelector("[data-carousel-next]")?.addEventListener("click", () => goTo(current() + 1));
+    dots.forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
+    track.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") goTo(current() - 1);
+      if (event.key === "ArrowRight") goTo(current() + 1);
+    });
+    let frame = 0;
+    track.addEventListener("scroll", () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    });
+  });
+</script>
+
+<style>
+  .carousel {
+    background: var(--color-foreground);
+  }
+  .carousel__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+  .carousel__track:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: -3px;
+  }
+  .carousel__slide {
+    flex: 0 0 100%;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+  .carousel__slide img {
+    display: block;
+    width: 100%;
+    height: min(78vh, 760px);
+    object-fit: cover;
+  }
+  .carousel__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.9rem;
+  }
+  .carousel__caption {
+    margin: 0;
+    color: #cfe2dc;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  .carousel__controls {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .carousel__dots {
+    display: flex;
+    gap: 0.4rem;
+    margin-right: 0.4rem;
+  }
+  .carousel__dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    padding: 0;
+    border: 1px solid #ffffff99;
+    border-radius: 50%;
+    background: transparent;
+  }
+  .carousel__dot[aria-current="true"] {
+    background: white;
+  }
+  .carousel__arrow {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid #ffffff55;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font-size: 1.1rem;
+    transition: background 0.2s ease;
+  }
+  .carousel__arrow:hover {
+    background: #ffffff1f;
+  }
+  .carousel__dot:focus-visible,
+  .carousel__arrow:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  @media (max-width: 720px) {
+    .carousel__slide img {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+    .carousel__caption {
+      font-size: 0.78rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .carousel__track {
+      scroll-behavior: auto;
+    }
+  }
+</style>
