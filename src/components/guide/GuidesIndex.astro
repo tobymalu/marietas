@@ -1,34 +1,27 @@
 ---
 // Listado de guías para /blog/ y /en/blog/.
-import { getCollection } from "astro:content";
+import { getGuides } from "../../lib/guides";
 import type { SiteLanguage } from "../../lib/site";
+import GuideCard from "./GuideCard.astro";
 
 interface Props {
   lang?: SiteLanguage;
 }
 
 const { lang = "es" } = Astro.props;
-const en = lang === "en";
-const guides = (await getCollection(en ? "guiasEn" : "guias"))
-  .filter((guide) => !guide.data.noindex)
-  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
-const hrefFor = (guide: (typeof guides)[number]) =>
-  en
-    ? `/en/guide/${guide.data.categoria}/${guide.id}/`
-    : `/guia/${guide.data.categoria}/${guide.id}/`;
-const copy = en
-  ? {
-      eyebrow: "Islas Marietas guides",
-      title: "Plan your visit with local knowledge",
-      lede: "Practical guides written by our crew: access, permits, seasons and tips to make the most of the islands.",
-      read: "Read the guide",
-    }
-  : {
-      eyebrow: "Guías de las Islas Marietas",
-      title: "Planea tu visita con información local",
-      lede: "Guías prácticas escritas por nuestro equipo: accesos, permisos, temporadas y consejos para aprovechar al máximo las islas.",
-      read: "Leer la guía",
-    };
+const guides = await getGuides(lang);
+const copy =
+  lang === "en"
+    ? {
+        eyebrow: "Islas Marietas guides",
+        title: "Plan your visit with local knowledge",
+        lede: "Practical guides written by our crew: access, permits, seasons and tips to make the most of the islands.",
+      }
+    : {
+        eyebrow: "Guías de las Islas Marietas",
+        title: "Planea tu visita con información local",
+        lede: "Guías prácticas escritas por nuestro equipo: accesos, permisos, temporadas y consejos para aprovechar al máximo las islas.",
+      };
 ---
 
 <div class="sections">
@@ -39,31 +32,7 @@ const copy = en
   </section>
 
   <section class="container guides-grid">
-    {
-      guides.map((guide) => (
-        <article class="guide-card">
-          <a class="guide-card__media" href={hrefFor(guide)} tabindex="-1" aria-hidden="true">
-            <img
-              src={guide.data.featured_image.url}
-              alt=""
-              width={guide.data.featured_image.width}
-              height={guide.data.featured_image.height}
-              loading="lazy"
-            />
-          </a>
-          <div class="guide-card__body">
-            <p class="eyebrow">{guide.data.categoria}</p>
-            <h2>
-              <a href={hrefFor(guide)}>{guide.data.title}</a>
-            </h2>
-            <p>{guide.data.resumen}</p>
-            <a class="text-link" href={hrefFor(guide)}>
-              {copy.read} <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </article>
-      ))
-    }
+    {guides.map((guide) => <GuideCard guide={guide} lang={lang} />)}
   </section>
 </div>
 
@@ -87,48 +56,5 @@ const copy = en
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
-  }
-  .guide-card {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border: 1px solid #dce5df;
-  }
-  .guide-card__media {
-    overflow: hidden;
-  }
-  .guide-card__media img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-  .guide-card:hover .guide-card__media img {
-    transform: scale(1.04);
-  }
-  .guide-card__body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 0.6rem;
-    padding: 1.35rem;
-  }
-  .guide-card h2 {
-    margin: 0;
-    font: 600 1.5rem/1.15 var(--font-display);
-  }
-  .guide-card h2 a:hover {
-    color: var(--color-primary);
-  }
-  .guide-card__body > p:not(.eyebrow) {
-    margin: 0;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-  .guide-card .text-link {
-    margin-top: auto;
-    padding-top: 0.5rem;
   }
 </style>

@@ -8,6 +8,7 @@ import LocationMap from "../LocationMap.astro";
 import ValueBar from "../ValueBar.astro";
 import FAQSection from "./FAQSection.astro";
 import HeroSection from "./HeroSection.astro";
+import LatestGuides from "./LatestGuides.astro";
 import ParkInfo from "./ParkInfo.astro";
 import Testimonials from "./Testimonials.astro";
 import TourGrid from "./TourGrid.astro";
@@ -30,4 +31,5 @@ const valueProps = getHomeValueProps(lang);
   <Testimonials lang={lang} />
   <FAQSection items={faq} lang={lang} />
   <LocationMap lang={lang} />
+  <LatestGuides lang={lang} />
 </div>

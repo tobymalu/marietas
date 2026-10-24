@@ -1,0 +1,111 @@
+---
+// Tarjeta de una guía (blog y home).
+import { guideHref, type Guide } from "../../lib/guides";
+import type { SiteLanguage } from "../../lib/site";
+
+interface Props {
+  guide: Guide;
+  lang?: SiteLanguage;
+  /** h2 en el listado del blog, h3 dentro de una sección del home. */
+  headingLevel?: 2 | 3;
+}
+
+const { guide, lang = "es", headingLevel = 2 } = Astro.props;
+const href = guideHref(guide, lang);
+const Heading = `h${headingLevel}` as "h2" | "h3";
+const read = lang === "en" ? "Read the guide" : "Leer la guía";
+---
+
+<article class="guide-card">
+  <a class="guide-card__media" href={href} tabindex="-1" aria-hidden="true">
+    <img
+      src={guide.data.featured_image.url}
+      alt=""
+      width={guide.data.featured_image.width}
+      height={guide.data.featured_image.height}
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+  <div class="guide-card__body">
+    <p class="guide-card__category">{guide.data.categoria}</p>
+    <Heading class="guide-card__title">
+      <a href={href}>{guide.data.title}</a>
+    </Heading>
+    <p>{guide.data.resumen}</p>
+    <a class="guide-card__link" href={href}>
+      {read} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>
+
+<style>
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #dce5df;
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+  .guide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px #173b4018;
+  }
+  .guide-card__media {
+    overflow: hidden;
+  }
+  .guide-card__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .guide-card:hover .guide-card__media img {
+    transform: scale(1.04);
+  }
+  .guide-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.35rem;
+  }
+  .guide-card__category {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .guide-card__title {
+    margin: 0;
+    font: 600 1.5rem/1.15 var(--font-display);
+  }
+  .guide-card__title a:hover {
+    color: var(--color-primary);
+  }
+  .guide-card__body > p:not(.guide-card__category) {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+  .guide-card__link {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .guide-card,
+    .guide-card__media img {
+      transition: none;
+    }
+  }
+</style>
