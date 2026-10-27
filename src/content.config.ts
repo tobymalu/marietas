@@ -91,6 +91,8 @@ const guideSchema = z.object({
   featured_image: imageSchema,
   // Fotos del carrusel de portada (la primera debe ser featured_image).
   carrusel: z.array(imageSchema).min(1),
+  // Preguntas frecuentes: se muestran con <GuideFaq /> y generan JSON-LD FAQPage.
+  faq: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
   // Ruta de la misma guía en el otro idioma.
   alternate: z.string().optional(),
   canonical: z.string().url().optional(),

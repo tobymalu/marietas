@@ -4,7 +4,7 @@
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import { organizationId } from "../../lib/schema";
+import { faqSchema, organizationId } from "../../lib/schema";
 import { site, type SiteLanguage } from "../../lib/site";
 import PhotoCarousel from "../PhotoCarousel.astro";
 
@@ -52,6 +52,7 @@ const schemas = [
       { name: data.title, item: pageUrl },
     ].map((crumb, index) => ({ "@type": "ListItem", position: index + 1, ...crumb })),
   },
+  ...(data.faq.length > 0 ? [faqSchema(data.faq)] : []),
 ];
 ---
 

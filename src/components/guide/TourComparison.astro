@@ -4,6 +4,7 @@
 import { getCollection } from "astro:content";
 import { formatFee, pierFees } from "../../lib/park";
 import type { SiteLanguage } from "../../lib/site";
+import { adultPrice } from "../../lib/tours";
 
 interface Props {
   lang?: SiteLanguage;
@@ -35,6 +36,13 @@ const extras = (tour: typeof special) => {
   return addons.join(" + ") || "—";
 };
 const base = en ? "/en/tours/" : "/tours/";
+// Diferencia entre las tarifas de adulto (lo que cuesta "subir" al tour especial).
+const specialAdult = adultPrice(special?.data.precios ?? []);
+const classicAdult = adultPrice(classic?.data.precios ?? []);
+const difference =
+  specialAdult && classicAdult
+    ? `+$${(specialAdult.amount - classicAdult.amount).toLocaleString(locale)} ${specialAdult.currency}`
+    : "—";
 
 const copy = en
   ? {
@@ -42,12 +50,15 @@ const copy = en
       specialName: "Hidden Beach tour",
       classicName: "Classic tour (snorkel & Nopalera)",
       rows: [
-        ["Enters Hidden Beach", "Yes, with a CONANP time slot", "No"],
+        ["Enters Hidden Beach", "Yes, 30 to 45 minutes inside the crater", "No"],
+        ["CONANP permit", "Assigned time slot with a limited daily capacity", "General park access bracelet"],
+        ["Age", "12 to 60 only", "All ages"],
         ["Price per person", prices(special), prices(classic)],
+        ["Price difference (adult)", difference, "—"],
         ["Extra costs (paid at the pier)", extras(special), extras(classic)],
         ["Duration", special?.data.duracion ?? "—", classic?.data.duracion ?? "—"],
         ["Activities", "Everything in the classic tour + 30 to 45 min inside Hidden Beach", "Snorkeling, kayak, paddleboard, Nopalera Beach, meals and open bar"],
-        ["Restrictions", "Ages 12 to 60 only, must know how to swim, limited spots", "Open to all ages"],
+        ["Restrictions", "Must know how to swim; spots sell out first", "Life jacket for every water activity"],
         ["Best for", "Swimmers aged 12 to 60 who want the iconic beach", "Families with kids and first-time visitors"],
       ],
       details: "View tour",
@@ -57,12 +68,15 @@ const copy = en
       specialName: "Tour Playa Escondida",
       classicName: "Tour tradicional (snorkel y Nopalera)",
       rows: [
-        ["Entra a la Playa del Amor", "Sí, con horario asignado por la CONANP", "No"],
+        ["Entra a la Playa del Amor", "Sí, 30 a 45 minutos dentro del cráter", "No"],
+        ["Permiso CONANP", "Horario asignado con cupo diario limitado", "Brazalete general de acceso al parque"],
+        ["Edad", "Solo de 12 a 60 años", "Todas las edades"],
         ["Precio por persona", prices(special), prices(classic)],
+        ["Diferencia de precio (adulto)", difference, "—"],
         ["Costos extra (en el muelle)", extras(special), extras(classic)],
         ["Duración", special?.data.duracion ?? "—", classic?.data.duracion ?? "—"],
         ["Actividades", "Todo lo del tour tradicional + 30 a 45 min dentro de la Playa Escondida", "Snorkel, kayak, paddleboard, Playa Nopalera, comida y barra libre"],
-        ["Restricciones", "Solo de 12 a 60 años, saber nadar, cupo limitado", "Apto para todas las edades"],
+        ["Restricciones", "Saber nadar; los lugares se agotan primero", "Chaleco salvavidas en toda actividad en el agua"],
         ["Ideal para", "Nadadores de 12 a 60 años que quieren la playa icónica", "Familias con niños y quienes visitan por primera vez"],
       ],
       details: "Ver tour",

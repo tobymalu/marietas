@@ -1,0 +1,34 @@
+---
+// Preguntas frecuentes dentro de una guía (MDX): <GuideFaq items={frontmatter.faq} />.
+// El JSON-LD FAQPage lo genera GuideArticle a partir del mismo frontmatter.
+import type { FaqItem } from "../../lib/home-content";
+import type { SiteLanguage } from "../../lib/site";
+import Accordion from "../home/Accordion.astro";
+
+interface Props {
+  items: FaqItem[];
+  lang?: SiteLanguage;
+}
+
+const { items, lang = "es" } = Astro.props;
+const title = lang === "en" ? "Frequently asked questions" : "Preguntas frecuentes";
+---
+
+{
+  items.length > 0 && (
+    <section class="guide-faq not-prose" aria-labelledby="guide-faq-title">
+      <h2 id="guide-faq-title">{title}</h2>
+      <Accordion items={items} />
+    </section>
+  )
+}
+
+<style>
+  .guide-faq {
+    margin-top: 3rem;
+  }
+  h2 {
+    margin: 0 0 1rem;
+    font: 600 clamp(1.7rem, 3.5vw, 2.3rem)/1.15 var(--font-display);
+  }
+</style>

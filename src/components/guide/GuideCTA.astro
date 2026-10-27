@@ -1,12 +1,16 @@
 ---
-// Llamada a la acción al final de una guía: tours + WhatsApp.
+// Llamada a la acción al final de una guía.
+// variant "tours" (por defecto): botón a /tours/ + WhatsApp.
+// variant "both": un botón a cada tour (para guías comparativas) + WhatsApp.
 import { whatsappUrl, type SiteLanguage } from "../../lib/site";
 
 interface Props {
   lang?: SiteLanguage;
+  variant?: "tours" | "both";
 }
 
-const { lang = "es" } = Astro.props;
+const { lang = "es", variant = "tours" } = Astro.props;
+const base = lang === "en" ? "/en/tours/" : "/tours/";
 const copy =
   lang === "en"
     ? {
@@ -15,6 +19,10 @@ const copy =
         tours: "See our tours",
         toursHref: "/en/tours/",
         whatsapp: "Ask on WhatsApp",
+        bothTitle: "Which one is your Islas Marietas day?",
+        bothText: "Both tours include breakfast, lunch, open bar and water activities. Check availability for your date before you pay.",
+        special: "Hidden Beach tour",
+        classic: "Classic snorkel tour",
       }
     : {
         title: "¿Listo para conocer la Playa Escondida?",
@@ -22,16 +30,36 @@ const copy =
         tours: "Ver nuestros tours",
         toursHref: "/tours/",
         whatsapp: "Preguntar por WhatsApp",
+        bothTitle: "¿Cuál es tu día en las Islas Marietas?",
+        bothText: "Los dos tours incluyen desayuno, comida, barra libre y actividades acuáticas. Consulta disponibilidad para tu fecha antes de pagar.",
+        special: "Tour Playa Escondida",
+        classic: "Tour tradicional de snorkel",
       };
+const both = variant === "both";
 ---
 
 <aside class="guide-cta not-prose">
   <div>
-    <p class="guide-cta__title">{copy.title}</p>
-    <p>{copy.text}</p>
+    <p class="guide-cta__title">{both ? copy.bothTitle : copy.title}</p>
+    <p>{both ? copy.bothText : copy.text}</p>
   </div>
   <div class="guide-cta__actions">
-    <a class="guide-cta__button" href={copy.toursHref}>{copy.tours} <span aria-hidden="true">→</span></a>
+    {
+      both ? (
+        <>
+          <a class="guide-cta__button" href={`${base}playa-escondida/`}>
+            {copy.special} <span aria-hidden="true">→</span>
+          </a>
+          <a class="guide-cta__button guide-cta__button--light" href={`${base}snorkel-islas-marietas/`}>
+            {copy.classic} <span aria-hidden="true">→</span>
+          </a>
+        </>
+      ) : (
+        <a class="guide-cta__button" href={copy.toursHref}>
+          {copy.tours} <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
     <a class="guide-cta__link" href={whatsappUrl()} target="_blank" rel="noreferrer"
       >{copy.whatsapp} <span aria-hidden="true">↗</span></a
     >
@@ -69,6 +97,10 @@ const copy =
     background: var(--color-accent);
     color: white;
     font-weight: 700;
+  }
+  .guide-cta__button--light {
+    background: white;
+    color: var(--color-primary);
   }
   .guide-cta__link {
     color: white;
