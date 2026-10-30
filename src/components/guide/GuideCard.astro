@@ -2,15 +2,18 @@
 // Tarjeta de una guía (blog y home).
 import { guideHref, type Guide } from "../../lib/guides";
 import type { SiteLanguage } from "../../lib/site";
+import Photo from "../Photo.astro";
 
 interface Props {
   guide: Guide;
   lang?: SiteLanguage;
   /** h2 en el listado del blog, h3 dentro de una sección del home. */
   headingLevel?: 2 | 3;
+  /** true en la primera tarjeta cuando es la imagen LCP (p. ej. /blog/). */
+  priority?: boolean;
 }
 
-const { guide, lang = "es", headingLevel = 2 } = Astro.props;
+const { guide, lang = "es", headingLevel = 2, priority = false } = Astro.props;
 const href = guideHref(guide, lang);
 const Heading = `h${headingLevel}` as "h2" | "h3";
 const read = lang === "en" ? "Read the guide" : "Leer la guía";
@@ -18,13 +21,12 @@ const read = lang === "en" ? "Read the guide" : "Leer la guía";
 
 <article class="guide-card">
   <a class="guide-card__media" href={href} tabindex="-1" aria-hidden="true">
-    <img
+    <Photo
       src={guide.data.featured_image.url}
-      alt=""
-      width={guide.data.featured_image.width}
-      height={guide.data.featured_image.height}
-      loading="lazy"
-      decoding="async"
+      alt={guide.data.featured_image.alt}
+      sizes="(max-width: 640px) 100vw, (max-width: 1120px) 50vw, 360px"
+      widths={[400, 600, 800, 1200]}
+      priority={priority}
     />
   </a>
   <div class="guide-card__body">

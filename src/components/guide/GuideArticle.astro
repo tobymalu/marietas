@@ -4,6 +4,7 @@
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { absoluteImageUrl } from "../../lib/images";
 import { faqSchema, organizationId } from "../../lib/schema";
 import { site, type SiteLanguage } from "../../lib/site";
 import PhotoCarousel from "../PhotoCarousel.astro";
@@ -37,7 +38,7 @@ const schemas = [
     inLanguage: en ? "en-US" : "es-MX",
     url: pageUrl,
     mainEntityOfPage: pageUrl,
-    image: new URL(data.featured_image.url, site.url).href,
+    image: await absoluteImageUrl(data.featured_image.url),
     datePublished: data.pubDate.toISOString(),
     dateModified: modified.toISOString(),
     author: { "@type": "Organization", name: data.author, url: site.url },

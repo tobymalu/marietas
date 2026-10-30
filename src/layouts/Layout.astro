@@ -1,10 +1,12 @@
 ---
+import { Font } from "astro:assets";
 import CookieBanner from "../components/CookieBanner.astro";
 import Footer from "../components/Footer.astro";
 import GoogleTagManager from "../components/GoogleTagManager.astro";
 import GoogleTagManagerNoscript from "../components/GoogleTagManagerNoscript.astro";
 import Header from "../components/Header.astro";
 import WhatsAppFloat from "../components/WhatsAppFloat.astro";
+import { absoluteImageUrl } from "../lib/images";
 import { site } from "../lib/site";
 import "../styles/global.css";
 
@@ -29,7 +31,8 @@ const {
   lang = "es",
   alternateUrl,
 } = Astro.props;
-const absoluteImage = new URL(ogImage, site.url).href;
+// JPG de 1200 px generado por Astro (las redes no leen AVIF de forma fiable).
+const absoluteImage = await absoluteImageUrl(ogImage);
 const currentUrl = canonical.startsWith("http")
   ? canonical
   : new URL(canonical, site.url).href;
@@ -50,12 +53,10 @@ const copy =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <GoogleTagManager />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fuentes autoalojadas (config en astro.config.mjs). Se precarga solo el
+         texto principal; los títulos cargan con font-display: swap. -->
+    <Font cssVariable="--font-dm-sans" preload={[{ weight: 400, style: "normal" }]} />
+    <Font cssVariable="--font-playfair" />
     <link
       rel="icon"
       href="/imgMarietas/favicon/favicon.ico"

@@ -1,18 +1,19 @@
 // Datos estructurados (JSON-LD) compartidos entre páginas e idiomas.
 import type { FaqItem } from "./home-content";
+import { absoluteImageUrl } from "./images";
 import { site } from "./site";
 
 export const organizationId = `${site.url}/#organization`;
 
-export function travelAgencySchema() {
+export async function travelAgencySchema() {
   return {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
     "@id": organizationId,
     name: site.name,
     url: site.url,
-    logo: new URL("/imgMarietas/MarietasLogo.png", site.url).href,
-    image: new URL("/imgMarietas/portada.jpg", site.url).href,
+    logo: await absoluteImageUrl("/imgMarietas/MarietasLogo.png", 512),
+    image: await absoluteImageUrl("/imgMarietas/portada.jpg"),
     telephone: site.phone.e164,
     email: site.email,
     areaServed: "Islas Marietas, Bahía de Banderas, Nayarit, México",

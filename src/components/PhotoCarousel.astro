@@ -1,17 +1,17 @@
 ---
 // Carrusel de fotos a pantalla completa, sin overlays ni degradados: la foto
 // manda. Los controles y el pie de foto van debajo de la imagen.
+import type { ImageMetadata } from "astro";
 import type { SiteLanguage } from "../lib/site";
+import Photo from "./Photo.astro";
 
-interface Photo {
-  url: string;
+interface CarouselPhoto {
+  url: string | ImageMetadata;
   alt: string;
-  width: number;
-  height: number;
 }
 
 interface Props {
-  photos: Photo[];
+  photos: CarouselPhoto[];
   lang?: SiteLanguage;
   /** true para la foto principal de la página (carga prioritaria). */
   priority?: boolean;
@@ -34,14 +34,11 @@ const copy =
           aria-roledescription="slide"
           aria-label={`${index + 1} ${copy.of} ${photos.length}`}
         >
-          <img
+          <Photo
             src={photo.url}
             alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            loading={priority && index === 0 ? "eager" : "lazy"}
-            fetchpriority={priority && index === 0 ? "high" : "auto"}
-            decoding="async"
+            sizes="100vw"
+            priority={priority && index === 0}
           />
         </figure>
       ))

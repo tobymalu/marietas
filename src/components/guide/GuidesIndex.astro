@@ -32,7 +32,9 @@ const copy =
   </section>
 
   <section class="container guides-grid">
-    {guides.map((guide) => <GuideCard guide={guide} lang={lang} />)}
+    {guides.map((guide, index) => (
+      <GuideCard guide={guide} lang={lang} priority={index === 0} />
+    ))}
   </section>
 </div>
 

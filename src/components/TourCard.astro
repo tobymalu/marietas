@@ -1,14 +1,17 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { whatsappUrl, type SiteLanguage } from "../lib/site";
+import Photo from "./Photo.astro";
 import { adultPrice, tourPriceNote } from "../lib/tours";
 
 interface Props {
   tour: CollectionEntry<"tours"> | CollectionEntry<"toursEn">;
   lang?: SiteLanguage;
+  /** true en la primera tarjeta cuando es la imagen LCP (p. ej. /tours/). */
+  priority?: boolean;
 }
 
-const { tour, lang = "es" } = Astro.props;
+const { tour, lang = "es", priority = false } = Astro.props;
 const data = tour.data;
 const price = adultPrice(data.precios);
 const priceNote = tourPriceNote(data, lang);
@@ -22,13 +25,12 @@ const copy =
 
 <article class="tour-card">
   <a class="tour-card__media" href={href} tabindex="-1" aria-hidden="true">
-    <img
+    <Photo
       src={data.galeria[0].imagen}
-      alt=""
-      width="1200"
-      height="800"
-      loading="lazy"
-      decoding="async"
+      alt={data.galeria[0].alt}
+      sizes="(max-width: 640px) 100vw, (max-width: 1120px) 50vw, 360px"
+      widths={[400, 600, 800, 1200]}
+      priority={priority}
     />
     {
       data.badges.length > 0 && (

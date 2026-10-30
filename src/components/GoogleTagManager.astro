@@ -25,15 +25,26 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID || "GTM-MZCGN2DZ";
     ad_personalization: consentGranted ? "granted" : "denied",
     wait_for_update: 500,
   });
+  // gtm.js se descarga después del evento `load` (y cuando el navegador está
+  // libre) para que su JavaScript no retrase el pintado del hero (LCP).
+  // El dataLayer ya existe: los eventos anteriores quedan en cola y se envían.
   (function (w, d, s, l, i) {
     w[l] = w[l] || [];
     w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-    const firstScript = d.getElementsByTagName(s)[0];
-    const gtmScript = d.createElement(s);
-    const layerQuery = l !== "dataLayer" ? "&l=" + l : "";
-    gtmScript.async = true;
-    gtmScript.src =
-      "https://www.googletagmanager.com/gtm.js?id=" + i + layerQuery;
-    firstScript.parentNode.insertBefore(gtmScript, firstScript);
+    const loadGtm = () => {
+      const firstScript = d.getElementsByTagName(s)[0];
+      const gtmScript = d.createElement(s);
+      const layerQuery = l !== "dataLayer" ? "&l=" + l : "";
+      gtmScript.async = true;
+      gtmScript.src =
+        "https://www.googletagmanager.com/gtm.js?id=" + i + layerQuery;
+      firstScript.parentNode.insertBefore(gtmScript, firstScript);
+    };
+    const schedule = () =>
+      "requestIdleCallback" in w
+        ? w.requestIdleCallback(loadGtm, { timeout: 2000 })
+        : w.setTimeout(loadGtm, 1);
+    if (d.readyState === "complete") schedule();
+    else w.addEventListener("load", schedule, { once: true });
   })(window, document, "script", "dataLayer", gtmId);
 </script>

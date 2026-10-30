@@ -1,8 +1,12 @@
 ---
 // Portada a sangre completa con overlay: texto a la izquierda y una tarjeta
 // (formulario, datos…) a la derecha vía <slot />. Usada por home y nosotros.
+import type { ImageMetadata } from "astro";
+import Photo from "./Photo.astro";
+
 interface Props {
-  image: { src: string; alt: string; width: number; height: number };
+  /** Imagen LCP de la página: se carga con prioridad alta. */
+  image: { src: string | ImageMetadata; alt: string };
   eyebrow: string;
   title: string;
   lede: string;
@@ -13,14 +17,7 @@ const { image, eyebrow, title, lede, trust } = Astro.props;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <img
-    class="hero__bg"
-    src={image.src}
-    alt={image.alt}
-    width={image.width}
-    height={image.height}
-    fetchpriority="high"
-  />
+  <Photo class="hero__bg" src={image.src} alt={image.alt} sizes="100vw" priority />
   <div class="hero__inner container">
     <div class="hero__copy">
       <p class="eyebrow">{eyebrow}</p>

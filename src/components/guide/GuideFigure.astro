@@ -1,19 +1,19 @@
 ---
 // Foto dentro del texto de una guía, a todo el ancho de la columna y sin
-// efectos encima.
+// efectos encima. Ruta "/imgMarietas/..." (vive en src/assets/imgMarietas/).
+import Photo from "../Photo.astro";
+
 interface Props {
   src: string;
   alt: string;
-  width: number;
-  height: number;
   caption?: string;
 }
 
-const { src, alt, width, height, caption } = Astro.props;
+const { src, alt, caption } = Astro.props;
 ---
 
 <figure class="guide-figure not-prose">
-  <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+  <Photo src={src} alt={alt} sizes="(max-width: 800px) 100vw, 760px" widths={[480, 760, 1140, 1520]} />
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
 

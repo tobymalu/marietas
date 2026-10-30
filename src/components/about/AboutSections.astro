@@ -5,6 +5,7 @@ import { whatsappUrl, type SiteLanguage } from "../../lib/site";
 import Gallery from "../Gallery.astro";
 import LocationMap from "../LocationMap.astro";
 import PageHero from "../PageHero.astro";
+import Photo from "../Photo.astro";
 import ValueBar from "../ValueBar.astro";
 
 interface Props {
@@ -38,8 +39,6 @@ const sanctuaryPhotos = [
     image={{
       src: "/imgMarietas/marietas formacion volcanica.jpg",
       alt: t.hero.alt,
-      width: 3648,
-      height: 2736,
     }}
     eyebrow={t.hero.eyebrow}
     title={t.hero.title}
@@ -89,13 +88,11 @@ const sanctuaryPhotos = [
   <!-- 4. Quiénes somos -->
   <section class="team" aria-labelledby="team-title">
     <div class="container team__grid">
-      <img
+      <Photo
         class="team__photo"
         src="/imgMarietas/playa-escondida/grupo-lancha-arco-islas-marietas.jpg"
         alt={t.team.alt}
-        width="1080"
-        height="810"
-        loading="lazy"
+        sizes="(max-width: 860px) 100vw, 540px"
       />
       <div>
         <p class="eyebrow">{t.team.eyebrow}</p>
@@ -139,12 +136,10 @@ const sanctuaryPhotos = [
   <!-- 8. Ruta ilustrada -->
   <section class="route" aria-labelledby="route-title">
     <div class="container route__grid">
-      <img
+      <Photo
         src="/imgMarietas/mapas/mapa-islas-marietas-playa-del-amor-nopalera.jpg"
         alt={t.route.alt}
-        width="1600"
-        height="1512"
-        loading="lazy"
+        sizes="(max-width: 860px) 100vw, 540px"
       />
       <div>
         <p class="eyebrow">{t.route.eyebrow}</p>

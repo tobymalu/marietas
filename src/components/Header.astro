@@ -1,4 +1,5 @@
 ---
+import Photo from "./Photo.astro";
 import {
   NAV_LINKS,
   NAV_LINKS_EN,
@@ -38,7 +39,15 @@ const copy =
       href={lang === "en" ? "/en/" : "/"}
       aria-label={`${site.name}, ${copy.home}`}
     >
-      <img src="/imgMarietas/MarietasLogo.png" alt="" width="48" height="48" />
+      <Photo
+        src="/imgMarietas/MarietasLogo.png"
+        alt={`Logo de ${site.name}`}
+        width={48}
+        height={48}
+        sizes="48px"
+        widths={[48, 96]}
+        loading="eager"
+      />
       <span>{site.name}</span>
     </a>
     <nav aria-label={copy.navigation}>

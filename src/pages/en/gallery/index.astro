@@ -1,4 +1,5 @@
 ---
+import Photo from "../../../components/Photo.astro";
 import Layout from "../../../layouts/Layout.astro";
 const images = [
   [
@@ -28,8 +29,14 @@ const images = [
       The view changes with every tide.
     </h1><div class="gallery-grid">
       {
-        images.map(([src, alt]) => (
-          <img src={src} alt={alt} width="800" height="600" loading="lazy" />
+        images.map(([src, alt], index) => (
+          <Photo
+            src={src}
+            alt={alt}
+            sizes="(max-width: 720px) 100vw, 560px"
+            widths={[480, 800, 1120]}
+            priority={index === 0}
+          />
         ))
       }
     </div>
@@ -62,8 +69,8 @@ const images = [
     aspect-ratio: 4/3;
     object-fit: cover;
   }
-  .gallery-grid img:nth-child(2),
-  .gallery-grid img:nth-child(3) {
+  .gallery-grid picture:nth-child(2) img,
+  .gallery-grid picture:nth-child(3) img {
     aspect-ratio: 3/4;
   }
   @media (max-width: 600px) {
@@ -71,8 +78,8 @@ const images = [
       grid-template-columns: 1fr;
     }
     .gallery-grid img,
-    .gallery-grid img:nth-child(2),
-    .gallery-grid img:nth-child(3) {
+    .gallery-grid picture:nth-child(2) img,
+    .gallery-grid picture:nth-child(3) img {
       aspect-ratio: 4/3;
     }
   }

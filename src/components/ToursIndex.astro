@@ -40,7 +40,7 @@ const copy =
   </section>
 
   <section class="container tours-grid" aria-label={copy.eyebrow}>
-    {tours.map((tour) => <TourCard tour={tour} lang={lang} />)}
+    {tours.map((tour, index) => <TourCard tour={tour} lang={lang} priority={index === 0} />)}
   </section>
 
   <section class="container tours-help">

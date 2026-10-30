@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { buildFaq, getParkInfo } from "../../lib/home-content";
 import { faqSchema, travelAgencySchema } from "../../lib/schema";
 
+const agencySchema = await travelAgencySchema();
 const faq = buildFaq("en");
 ---
 
@@ -17,7 +18,7 @@ const faq = buildFaq("en");
     is:inline
     slot="head"
     type="application/ld+json"
-    set:html={JSON.stringify(travelAgencySchema())}
+    set:html={JSON.stringify(agencySchema)}
   />
   <script
     is:inline

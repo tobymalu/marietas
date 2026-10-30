@@ -11,8 +11,8 @@
   --color-background: var(--color-sand);
   --color-foreground: var(--color-ink);
   --color-muted: #5f7778;
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "DM Sans", sans-serif;
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
 }
 
 :root {
@@ -39,6 +39,11 @@ a {
 button {
   font: inherit;
   cursor: pointer;
+}
+/* <picture> de astro:assets no participa en el layout: los estilos de cada
+   componente siguen aplicándose a la <img> como antes. */
+picture {
+  display: contents;
 }
 .font-display {
   font-family: var(--font-display);
